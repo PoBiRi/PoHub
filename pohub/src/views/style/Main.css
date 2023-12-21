@@ -8,23 +8,24 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  background-color: #D0CFCF;
 }
 .main .header-container {
   height: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 .main .header-container .search-bar {
   height: 1rem;
   width: 33.33%;
-  background-color: grey;
+  background-color: white;
 }
 .main .header-container .user-icon {
   height: 1rem;
   width: 1rem;
-  background-color: orange;
+  background-color: #F2F4CB;
   border-radius: 50%;
 }
 .main .section-container {
@@ -45,7 +46,7 @@
   background: rgba(33, 122, 244, .1);
 }
 .main .section-container .boardx {
-  background-color: aqua;
+  background-color: #F2F4CB;
   padding: 1rem;
-  height: 12rem;
+  height: 8rem;
 }

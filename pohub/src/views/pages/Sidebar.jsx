@@ -11,9 +11,9 @@ function Sidebar(props) {
       </div>
       <div className="thread-container">
         <div className="thread-box">
-          <div className="threadx" onClick={() => navigate("/nothing")}/>
-          <div className="threadx" />
-          <div className="threadx" />
+          <div className="threadx" onClick={() => navigate("/freeBoard")}>
+            자유게시판  
+          </div>
         </div>
       </div>
       <div className="footer" />

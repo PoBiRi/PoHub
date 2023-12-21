@@ -2,14 +2,13 @@
   display: flex;
   flex-direction: column;
   width: 15%;
-  background-color: grey;
+  background-color: #565254;
   padding : 0.25rem;
 }
 .sidebar .logo-box {
   margin-bottom: 2rem;
   height: 3rem;
   width: 100%;
-  background-color: red;
 }
 .sidebar .logo-box img {
   width: 100%;
@@ -28,9 +27,10 @@
   margin-bottom: 0.5rem;
 }
 .sidebar .threadx {
-  height: 2rem;
+  height: 1rem;
   width: 100%;
-  background-color: pink;
+  line-height: 1rem;
+  font-size: 0.75rem;
 }
 .sidebar .footer {
   height: 6rem;
