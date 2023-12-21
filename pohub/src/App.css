@@ -1,38 +1,88 @@
-.App {
-  text-align: center;
+.box {
+  display: flex;
+  height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sidebar {
+  width: 15%;
+  background-color: grey;
+  padding : 1rem;
+  overflow: auto;
+}
+.sidebar::-webkit-scrollbar {
+  width: 0;
+}
+.sidebar .logo-box {
+  margin-bottom: 2rem;
+  height: 3rem;
+  width: 100%;
+  background-color: red;
+}
+.sidebar .logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sidebar .thread-container {
+  margin-bottom: 2rem;
+}
+.sidebar .thread-box > div {
+  margin-bottom: 0.5rem;
+}
+.sidebar .threadx {
+  height: 2rem;
+  width: 100%;
+  background-color: pink;
+}
+.sidebar .footer {
+  height: 6rem;
+  width: 100%;
+  background-color: black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 1rem;
+}
+.main .header-container {
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-bottom: 4rem;
 }
-
-.App-link {
-  color: #61dafb;
+.main .header-container .search-bar {
+  height: 1rem;
+  width: 33.33%;
+  background-color: grey;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main .header-container .user-icon {
+  height: 1rem;
+  width: 1rem;
+  background-color: orange;
+  border-radius: 50%;
+}
+.main .section-container {
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.main .section-container::-webkit-scrollbar {
+  width: 4px;
+}
+.main .section-container::-webkit-scrollbar-thumb {
+  height: 30%;
+  background: #217af4;
+  border-radius: 10px;
+}
+.main .section-container::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, .1);
+}
+.main .section-container .boardx {
+  background-color: aqua;
+  padding: 1rem;
+  height: 12rem;
 }
