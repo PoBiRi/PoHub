@@ -13,9 +13,9 @@ app.get('/', function(req, res){
 });
 
 app.get('/getSectionx', function(req, res){
-    const {boardType} = req.body;
-    const query = 'SELETE * FROM board WHERE board_type = ?';
-    console.log(boardType);
+    const {boardType} = req.query;
+    const query = 'SELECT * FROM board WHERE board_type = ?';
+
     db.query(query, [boardType], (err, results) => {
         if (err) {
             console.error('Error executing MySQL query:', err);

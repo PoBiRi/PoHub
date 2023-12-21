@@ -7,40 +7,27 @@ function Section(props) {
   const { boardType } = useParams();
   const [boardData, setBoardData] = useState([]);
   
-  console.log(boardType);
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const reponse = await axios.get('http://localhost:4000/getSectionx', {
-          params: {
-            boardType: boardType,
-          },
-        });
-        setBoardData(reponse.data);
+        const res = await axios.get(`http://localhost:4000/getSectionx?boardType=${boardType}`);
+        
+        setBoardData(res.data);
       } catch (error) {
         console.error('Fetch error:', error);
       }
     };
-    console.log(boardData);
+    if(boardType) {
+      fetchData();
+    }
+  },[boardType]);
 
-    fetchData();
-  }, []);
-
+  console.log(boardData);
   return (
     <section className="section-container">
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
-      <div className="boardx" />
+      {boardData.map((data) => (
+        <div key={data.board_id} className="boardx">{data.title}</div>
+      ))}
     </section>
   )
 }
