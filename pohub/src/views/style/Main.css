@@ -3,43 +3,6 @@
   height: 100vh;
 }
 
-.sidebar {
-  width: 15%;
-  background-color: grey;
-  padding : 1rem;
-  overflow: auto;
-}
-.sidebar::-webkit-scrollbar {
-  width: 0;
-}
-.sidebar .logo-box {
-  margin-bottom: 2rem;
-  height: 3rem;
-  width: 100%;
-  background-color: red;
-}
-.sidebar .logo-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.sidebar .thread-container {
-  margin-bottom: 2rem;
-}
-.sidebar .thread-box > div {
-  margin-bottom: 0.5rem;
-}
-.sidebar .threadx {
-  height: 2rem;
-  width: 100%;
-  background-color: pink;
-}
-.sidebar .footer {
-  height: 6rem;
-  width: 100%;
-  background-color: black;
-}
-
 .main {
   flex: 1;
   display: flex;

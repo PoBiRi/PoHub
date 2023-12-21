@@ -1,0 +1,39 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  background-color: grey;
+  padding : 0.25rem;
+}
+.sidebar .logo-box {
+  margin-bottom: 2rem;
+  height: 3rem;
+  width: 100%;
+  background-color: red;
+}
+.sidebar .logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sidebar .thread-container {
+  margin-bottom: 2rem;
+  overflow: auto;
+  flex-grow: 1;
+}
+.sidebar .thread-container::-webkit-scrollbar {
+  width: 0;
+}
+.sidebar .thread-box > div {
+  margin-bottom: 0.5rem;
+}
+.sidebar .threadx {
+  height: 2rem;
+  width: 100%;
+  background-color: pink;
+}
+.sidebar .footer {
+  height: 6rem;
+  width: 100%;
+  background-color: black;
+}

@@ -1,69 +1,24 @@
-import './App.css';
-import Logo from './logo.png';
+import './views/style/Main.css';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Sidebar from './views/pages/Sidebar';
+import Header from './views/pages/Header';
+import Section from './views/pages/Section';
+import NotFound from './views/pages/NotFound';
 
-function App() {
+function App(props) {
   return (
-    <div className="box">
-      <aside className="sidebar">
-        <div className="logo-box">
-          <img src={Logo} alt='Nothing Here' />
-        </div>
-        <div className="thread-container">
-          <div className="thread-box">
-            <div className="threadx" />
-            <div className="threadx" />
-            <div className="threadx" />
-            <div className="threadx" />
-            <div className="threadx" />
-            <div className="threadx" />
-            <div className="threadx" />
-            <div className="threadx" />
-            <div className="threadx" />
-          </div>
-        </div>
-        <div className="footer" />
-      </aside>
-      <div className='void' />
-      <main className="main">
-        <header className="header-container">
-          <div className="search-bar" />
-          <UserIcon className="user-icon" />
-        </header>
-        <section className="section-container">
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-          <div className="boardx" />
-        </section>
-      </main>
+    <div className='box'>
+      <BrowserRouter>
+        <Sidebar />
+        <main className='main'>
+          <Header /> 
+          <Routes>
+            <Route path='/' element={<Section />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
     </div>
-  )
-}
-
-function UserIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-    </svg>
   )
 }
 
