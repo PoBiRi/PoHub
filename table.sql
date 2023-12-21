@@ -29,4 +29,12 @@ create table file (
 insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
+insert into board(writter, board_type, cnt, title)
+Values(1, 'freeBoard', 'Hello World', 'title1');
+insert into board(writter, board_type, cnt, title)
+Values(1, 'freeBoard', 'Hello World', 'title2');
+insert into board(writter, board_type, cnt, title)
+Values(1, 'freeBoard', 'Hello World', 'title3');
+
 select * from user;
+select * from board;

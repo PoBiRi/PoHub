@@ -12,7 +12,7 @@ function MainPage(props) {
         <main className='main'>
           <Header /> 
           <Routes>
-            <Route path='/:pageType' element={<Section />} />
+            <Route path='/:boardType' element={<Section />} />
             <Route path='/*' element={<NotFound />} />
           </Routes>
         </main>
