@@ -1,4 +1,4 @@
-import '../style/sidebar.css';
+import '../style/Sidebar.css';
 import Logo from '../../logo.png';
 import { useNavigate } from "react-router-dom";
 
