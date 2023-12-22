@@ -32,7 +32,7 @@ function Section(props) {
     <section className="section-container">
       {boardData.map((data) => (
         <div key={data.board_id} className="boardx">{data.title} {data.cnt}</div>
-      ))}
+      ))}       
     </section>
   )
 }

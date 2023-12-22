@@ -1,7 +1,10 @@
+html {
+  font-size: 32px;
+}
+
 .box {
   display: flex;
   height: 100vh;
-  font-size: 4px;
 }
 
 .main {
