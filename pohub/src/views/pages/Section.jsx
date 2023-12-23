@@ -16,7 +16,7 @@ function Section(props) {
     }
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://220.120.65.148:4000/getSectionx?boardType=${boardType}`);
+        const res = await axios.get(`http://211.226.0.207:4000/getSectionx?boardType=${boardType}`);
         setBoardData(res.data);
       } catch (error) {
         console.error('Fetch error:', error);
