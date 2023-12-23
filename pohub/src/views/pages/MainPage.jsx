@@ -13,6 +13,7 @@ function MainPage(props) {
           <Header /> 
           <Routes>
             <Route path='/Pages/:boardType' element={<Section />} />
+            {/* 외의 주소 모두 NotFound */}
             <Route path='/*' element={<NotFound />} />
           </Routes>
         </main>
