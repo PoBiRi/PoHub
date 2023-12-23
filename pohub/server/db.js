@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 //웹 호스팅용
 const db = mysql.createConnection({
-    host: '211.226.0.207',
+    host: 'localhost',
     user: 'host',
     password: '1234',
     database: 'pohub',

@@ -1,7 +1,7 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const path = require('path');
-const cors = require('cors');
 const PORT = 4000;
 const db = require('./db.js');
 
