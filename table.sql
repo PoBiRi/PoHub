@@ -16,6 +16,7 @@ create table board (
 	board_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     writter varchar(30),
     board_type varchar(30),
+    created_at timestamp,
     cnt text,
     title varchar(30),
     foreign key (writter) references user(user_id)
@@ -32,12 +33,12 @@ create table file (
 insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
-insert into board(writter, board_type, cnt, title)
-Values('testuser', 'freeBoard', 'Hello World', 'title1');
-insert into board(writter, board_type, cnt, title)
-Values('testuser', 'freeBoard', 'Hello World', 'title2');
-insert into board(writter, board_type, cnt, title)
-Values('testuser', 'freeBoard', 'Hello World', 'title3');
+insert into board(writter, board_type, created_at, cnt, title)
+Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title1');
+insert into board(writter, board_type, created_at, cnt, title)
+Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title2');
+insert into board(writter, board_type, created_at, cnt, title)
+Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title3');
 
 select * from user;
 select * from board;
