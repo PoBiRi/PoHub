@@ -1,38 +1,26 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function Paging(props) {
+  const navigate = useNavigate();
+  const {max, pageNum} = props;
+
+  function changePage(max, nextPage){
+    if(nextPage > max || nextPage < 1){return 0;}
+    navigate(`/Pages/freeBoard/${nextPage}`)
+  }
+
   return (
     <Buttonx>
-      <Button>
-        <ArrowLeftIcon className="w-4 h-4" />
+      <Button onClick={() => changePage(max, parseInt(pageNum) - 1)}>
+        <ArrowLeftIcon />
       </Button>
-      <Button
-        className="w-[40px] h-[40px] flex items-center justify-center rounded-full text-sm font-medium bg-black text-white"
-        variant="solid"
-      >
-        1
-      </Button>
-      <Button>
-        2
-      </Button>
-      <Button>
-        3
-      </Button>
-      <Button>
-        4
-      </Button>
-      <Button>
-        5
-      </Button>
-      <Button>
-        <ArrowRightIcon className="w-4 h-4" />
+      {pageNum}
+      <Button onClick={() => changePage(max, parseInt(pageNum) + 1)}>
+        <ArrowRightIcon />
       </Button>
     </Buttonx>
   )
-}
-
-function dutton() {
-
 }
 
 const Buttonx = styled.div`
@@ -65,8 +53,6 @@ const Button = styled.div`
     }
 `;
 
-
-
 function ArrowLeftIcon(props) {
   return (
     <svg
@@ -86,7 +72,6 @@ function ArrowLeftIcon(props) {
     </svg>
   )
 }
-
 
 function ArrowRightIcon(props) {
   return (

@@ -39,6 +39,8 @@ insert into board(writter, board_type, created_at, cnt, title)
 Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title2');
 insert into board(writter, board_type, created_at, cnt, title)
 Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title3');
+insert into board(writter, board_type, created_at, cnt, title)
+Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title_end');
 
 select * from user;
 select * from board;
