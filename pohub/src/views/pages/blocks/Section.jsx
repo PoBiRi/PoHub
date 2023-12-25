@@ -12,7 +12,6 @@ function Section(props) {
   const [max, setMax] = useState();
   const myRef = useRef();
   
-  myRef.current.scrollTop = 0;
 
   useEffect(() => {
     if(Types.indexOf(boardType) < 0){
@@ -21,6 +20,7 @@ function Section(props) {
     if(boardType) {
       getData(`getSectionx?boardType=${boardType}&pageNum=${pageNum}`, setBoardData);
       getData(`countBoard?boardType=${boardType}`, setMax);
+      myRef.current.scrollTop = 0;  
     }
   // eslint-disable-next-line
   },[pageNum]);
