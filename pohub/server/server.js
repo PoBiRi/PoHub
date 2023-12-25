@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
 app.get('/getSectionx', function(req, res){
@@ -26,8 +26,14 @@ app.get('/getSectionx', function(req, res){
     })
 });
 
+app.get('/DL/:fileName', function(req, res) {
+    const fileName = req.params.fileName;
+
+    res.download(path.join(__dirname, '../../../PoHub_Share', fileName));
+})
+
 app.get('*', function(req, res){
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
 app.listen(PORT, () =>{

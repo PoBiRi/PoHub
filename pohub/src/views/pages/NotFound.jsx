@@ -1,7 +1,7 @@
 function NotFound(props) {
   return (
     <div>
-        Not Fount :(
+        Not Found :(
     </div>
   )
 }
