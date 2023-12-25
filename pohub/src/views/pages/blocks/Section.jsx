@@ -1,8 +1,9 @@
-import '../style/Main.css';
+import '../../style/Main.css';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import getData from '../../controller/getData';
-import ToNF from '../../controller/ToNF';
+import getData from '../../../controller/getData';
+import ToNF from '../../../controller/ToNF';
+import Paging from './Paging';
 
 function Section(props) {
   const Types = ['freeBoard', 'fileShare'];
@@ -23,7 +24,8 @@ function Section(props) {
     <section className="section-container">
       {boardData.map((data) => (
         <div key={data.board_id} className="boardx">{data.title} {data.cnt}</div>
-      ))}       
+      ))}
+      <Paging />
     </section>
   )
 }

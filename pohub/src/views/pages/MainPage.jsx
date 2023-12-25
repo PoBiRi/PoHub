@@ -1,8 +1,8 @@
 import '../style/Main.css';
 import {Routes, Route} from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import Section from './Section';
+import Sidebar from './blocks/Sidebar';
+import Header from './blocks/Header';
+import Section from './blocks/Section';
 import NotFound from './NotFound';
 
 function MainPage(props) {

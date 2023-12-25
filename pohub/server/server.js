@@ -12,6 +12,7 @@ app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
+//맞는 게시판 타입의 게시판들 검색
 app.get('/getSectionx', function(req, res){
     const {boardType} = req.query;
     const query = 'SELECT * FROM board WHERE board_type = ?';
@@ -26,6 +27,7 @@ app.get('/getSectionx', function(req, res){
     })
 });
 
+//파일 다운로드
 app.get('/DL/:fileName', function(req, res) {
     const fileName = req.params.fileName;
 

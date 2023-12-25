@@ -1,4 +1,4 @@
-import '../style/Main.css';
+import '../../style/Main.css';
 
 function Header(props) {
   return (
