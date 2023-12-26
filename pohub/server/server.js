@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const requestIp = require('request-ip');
 const app = express();
 const path = require('path');
 const PORT = 4000;
@@ -11,6 +12,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '../build/index.html'));
+    console.log("Client IP: " + requestIp.getClientIp(req));
 });
 
 //맞는 게시판 타입의 게시판들 검색
