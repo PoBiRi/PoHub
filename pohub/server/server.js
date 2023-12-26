@@ -5,7 +5,7 @@ const path = require('path');
 const PORT = 4000;
 const db = require('./db.js');
 const requestIp = require('request-ip');
-const PageLimit = 10;
+const PageLimit = 12;
 
 app.use(cors());
 app.use(requestIp.mw());
