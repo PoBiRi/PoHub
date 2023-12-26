@@ -1,19 +1,26 @@
 const express = require('express');
 const cors = require('cors');
-const requestIp = require('request-ip');
 const app = express();
 const path = require('path');
 const PORT = 4000;
 const db = require('./db.js');
+const requestIp = require('request-ip');
 const PageLimit = 10;
 
 app.use(cors());
+app.use(requestIp.mw());
 app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/', function(req, res){
+    const clientIp = req.clientIp;
+    console.log('Client IP:', clientIp);
     res.sendFile(path.join(__dirname, '../build/index.html'));
-    console.log("Client IP: " + requestIp.getClientIp(req));
 });
+
+app.get('/clientIp', function(req, res){
+    const clientIp = req.clientIp;
+    console.log('Client IP:', clientIp);
+})
 
 //맞는 게시판 타입의 게시판들 검색
 app.get('/getSectionx', function(req, res){

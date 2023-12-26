@@ -6,7 +6,9 @@ const domain = "http://pobijunior.com/"
 async function getData(address, setData) {
     try {
         const res = await axios.get(domain + address);
-        setData(res.data);
+        if(setData){
+          setData(res.data);
+        }
       } catch (error) {
         console.error('Fetch error:', error);
       }

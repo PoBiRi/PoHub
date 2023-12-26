@@ -14,9 +14,12 @@ function Sidebar(props) {
           <div className="threadx" onClick={() => navigate("/Pages/freeBoard/1")}>
             자유게시판  
           </div>
+          <div className="threadx" onClick={() => navigate("/Pages/fileShare/1")}>
+            자료저장소
+          </div>
         </div>
       </div>
-      <div className="footer" />
+      <div className="footer" onClick={() => navigate("/Login")}/>
     </aside>
   )
 }

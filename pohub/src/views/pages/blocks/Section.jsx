@@ -20,8 +20,7 @@ function Section(props) {
     getData(`countBoard?boardType=${boardType}`, setMax);
     myRef.current.scrollTop = 0;
   // eslint-disable-next-line
-  },[pageNum]);
-  console.log("hello");
+  },[boardType, pageNum]);
 
   return (
     <section className="section-container" ref={myRef}>
