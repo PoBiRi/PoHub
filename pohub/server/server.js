@@ -12,8 +12,6 @@ app.use(requestIp.mw());
 app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/', function(req, res){
-    const clientIp = req.clientIp;
-    console.log('Client IP:', clientIp);
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
