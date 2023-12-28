@@ -34,6 +34,7 @@ app.get('/getSectionx', function(req, res){
             res.json(results);
         }
     });
+    //console.log('search boardType');
 });
 
 app.get('/countBoard', function(req, res){
@@ -48,6 +49,7 @@ app.get('/countBoard', function(req, res){
             res.json(Math.trunc(results[0]['max']/PageLimit) + 1);
         }
     });
+    //console.log('count Board');
 });
 
 //파일 다운로드
