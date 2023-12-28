@@ -24,7 +24,7 @@ function Login(props) {
           <div>
             <ButtonBox>
               <Button $color='#f59e0b' $hovercolor='#d97706'>
-                SIGN IN
+                Sign In
               </Button>
             </ButtonBox>
             <ButtonBox>
