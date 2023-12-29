@@ -2,10 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const path = require('path');
+const bodyParser = require('body-parser');
 const PORT = 4000;
 const db = require('./db.js');
 const requestIp = require('request-ip');
 const PageLimit = 12;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(cors());
 app.use(requestIp.mw());
@@ -18,6 +22,26 @@ app.get('/', function(req, res){
 app.get('/clientIp', function(req, res){
     const clientIp = req.clientIp;
     console.log('Client IP:', clientIp);
+})
+
+app.post('/reqLogin', function(req, res){
+    const clientIp = req.clientIp;
+    const {id, password} = req.body;
+    console.log('Login Request IP:', clientIp);
+    const query = 'SELECT user_id, pw FROM user WHERE user_id = ? AND pw = ?';
+
+    db.query(query, [id, password], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            if (results.length > 0){
+                res.json(true)
+            } else {
+                res.json(false)
+            }
+        }
+    });
 })
 
 //맞는 게시판 타입의 게시판들 검색
@@ -54,8 +78,10 @@ app.get('/countBoard', function(req, res){
 
 //파일 다운로드
 app.get('/DL/:fileName', function(req, res) {
+    const clientIp = req.clientIp;
     const fileName = req.params.fileName;
 
+    console.log('Client IP:', clientIp);
     res.download(path.join(__dirname, '../../../PoHub_Share', fileName));
 })
 

@@ -4,8 +4,8 @@ import './index.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import MainPage from './views/pages/MainPage';
-import Login from './views/pages/Login';
-import getData from '../src/controller/getData';
+import Login from './views/pages/LoginPage';
+import {getData} from './controller/ReqData';
 
 function App(props) {
   useEffect(() =>{

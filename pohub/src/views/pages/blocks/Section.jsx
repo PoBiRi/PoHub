@@ -1,7 +1,7 @@
 import '../../style/Main.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import getData from '../../../controller/getData';
+import { getData } from '../../../controller/ReqData';
 import ToNF from '../../../controller/ToNF';
 import Paging from './Paging';
 

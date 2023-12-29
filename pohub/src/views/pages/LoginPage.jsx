@@ -1,9 +1,54 @@
+import React, {useRef, useState, useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
 import Button from './blocks/Button';
 import styled from 'styled-components';
 /*import Logo from '../../logo.png';*/
 import Logo from '../../testLogo.png';
+import Swal from 'sweetalert2'; /* 알림창 */ 
+import '../style/AlertStyle.css'; /* 알림창 스타일시트 */
+import {postData} from '../../controller/ReqData';
 
 function Login(props) {
+  const idRef = useRef();
+  const passwordRef = useRef();
+  const [login, setLogin] = useState();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    console.log(login);
+    if(login) {navigate('/'); return}
+    else if(login === false) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Invalid ID or password',
+      });
+    }
+  // eslint-disable-next-line
+  },[login]);
+
+  const hadleEnterDown = (event) => {
+    if( event.key === 'Enter'){
+      event.preventDefault();
+      handleSignInButton();
+    }
+  };
+
+  const handleSignInButton = () => {
+    if(!idRef.current.value || !passwordRef.current.value){
+      Swal.fire({
+        title: 'Error',
+        text: 'There is no ID or password',
+      });
+    } else {
+      const loginData = {
+        id: idRef.current.value,
+        password: passwordRef.current.value,
+      };
+      setLogin();/* undefined */
+      postData('reqLogin', loginData, setLogin);
+    };
+  };
+
   return (
     <Container>
       <Box>
@@ -11,19 +56,19 @@ function Login(props) {
           <Img alt="Logo" src={Logo} />
         </LogoBox>
         <LoginBox>
-          <LoginForm>
+          <LoginForm onKeyDown={hadleEnterDown}>
             <Lable htmlFor='id'>
               ID
             </Lable>
-            <Input id="id" placeholder="Enter your ID" type="text"/>
+            <Input id="id" ref={idRef} placeholder="Enter your ID" type="text"/>
             <Lable htmlFor="password">
               PASSWORD
             </Lable>
-            <Input id="password" placeholder="Enter your password" type="password"/>
+            <Input id="password" ref={passwordRef} placeholder="Enter your password" type="password"/>
           </LoginForm>
           <div>
             <ButtonBox>
-              <Button $color='#f59e0b' $hovercolor='#d97706'>
+              <Button $color='#f59e0b' $hovercolor='#d97706' onClick={handleSignInButton}>
                 Sign In
               </Button>
             </ButtonBox>
