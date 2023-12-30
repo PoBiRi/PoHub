@@ -24,10 +24,10 @@ app.get('/clientIp', function(req, res){
     console.log('Client IP:', clientIp);
 })
 
+//로그인 요청
 app.post('/reqLogin', function(req, res){
     const clientIp = req.clientIp;
     const {id, password} = req.body;
-    console.log('Login Request IP:', clientIp);
     const query = 'SELECT user_id, pw FROM user WHERE user_id = ? AND pw = ?';
 
     db.query(query, [id, password], (err, results) => {
@@ -36,8 +36,10 @@ app.post('/reqLogin', function(req, res){
             res.status(500).json({ error: 'Internal Server Error' });
         } else {
             if (results.length > 0){
+                console.log('Logined User:', id, 'IP:', clientIp);
                 res.json(true)
             } else {
+                console.log('Logined Denied IP:', clientIp);
                 res.json(false)
             }
         }
