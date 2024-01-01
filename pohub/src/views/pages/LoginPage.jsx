@@ -12,7 +12,7 @@ function LoginPage(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(login) {navigate('/'); return}
+    if(login) {navigate('/Pages'); return}
     else if(login === false) {
       Swal.fire({
         title: 'Error',

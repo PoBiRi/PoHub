@@ -6,6 +6,7 @@ import './views/style/AlertStyle.css'; /* 알림창 스타일시트 */
 import reportWebVitals from './reportWebVitals';
 import MainPage from './views/pages/MainPage';
 import LoginPage from './views/pages/LoginPage';
+import NotFound from './views/pages/NotFound';
 import {getData} from './controller/ReqData';
 
 function App(props) {
@@ -16,8 +17,9 @@ function App(props) {
   return(
     <BrowserRouter>
       <Routes>
-        <Route path='/Login' element={<LoginPage />}/>
-        <Route path='/*' element={<MainPage />} />
+        <Route path='/' element={<LoginPage />}/>
+        <Route path='/Pages/*' element={<MainPage />} />
+        <Route path='/*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

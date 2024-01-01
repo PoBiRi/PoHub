@@ -7,7 +7,7 @@ function Sidebar(props) {
   return (
     <aside className="sidebar">
       <div className="logo-box">
-        <img src={Logo} alt='Nothing Here' onClick={() => navigate("/")}/>
+        <img src={Logo} alt='Nothing Here' onClick={() => navigate("/Pages")}/>
       </div>
       <div className="thread-container">
         <div className="thread-box">
@@ -19,7 +19,7 @@ function Sidebar(props) {
           </div>
         </div>
       </div>
-      <div className="footer" onClick={() => navigate("/Login")}/>
+      <div className="footer" onClick={() => navigate("/")}/>
     </aside>
   )
 }

@@ -12,7 +12,7 @@ function MainPage(props) {
         <main className='main'>
           <Header /> 
           <Routes>
-            <Route path='/Pages/:boardType/:pageNum' element={<Section />} />
+            <Route path='/:boardType/:pageNum' element={<Section />} />
             {/* 외의 주소 모두 NotFound */}
             <Route path='/*' element={<NotFound />} />
           </Routes>
