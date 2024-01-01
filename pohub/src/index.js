@@ -4,7 +4,7 @@ import './index.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import MainPage from './views/pages/MainPage';
-import Login from './views/pages/LoginPage';
+import LoginPage from './views/pages/LoginPage';
 import {getData} from './controller/ReqData';
 
 function App(props) {
@@ -15,7 +15,7 @@ function App(props) {
   return(
     <BrowserRouter>
       <Routes>
-        <Route path='/Login' element={<Login />}/>
+        <Route path='/Login' element={<LoginPage />}/>
         <Route path='/*' element={<MainPage />} />
       </Routes>
     </BrowserRouter>
