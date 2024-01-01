@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import './views/style/AlertStyle.css'; /* 알림창 스타일시트 */
 import reportWebVitals from './reportWebVitals';
 import MainPage from './views/pages/MainPage';
 import LoginPage from './views/pages/LoginPage';
