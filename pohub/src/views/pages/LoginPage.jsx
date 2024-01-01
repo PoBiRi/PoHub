@@ -4,7 +4,6 @@ import styled, { keyframes } from 'styled-components';
 /*import Logo from '../../logo.png';*/
 import Logo from '../../testLogo.png';
 import Swal from 'sweetalert2'; /* 알림창 */ 
-import '../style/AlertStyle.css'; /* 알림창 스타일시트 */
 import Login from './blocks/Login';
 
 function LoginPage(props) {
