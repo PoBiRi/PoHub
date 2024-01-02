@@ -1,6 +1,9 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const domain = "http://pobijunior.com/"
+//const domain = "http://localhost/" //로컬환경일시에만 변경
 
 //get요청 매개변수는 라우터 address와 setData 함수
 async function getData(address, setData) {

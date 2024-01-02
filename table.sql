@@ -30,6 +30,13 @@ create table file (
     foreign key (board_id) references board(board_id)
 );
 
+CREATE TABLE sessions (
+  session_id VARCHAR(255) NOT NULL,
+  expires BIGINT,
+  data TEXT,
+  PRIMARY KEY (session_id)
+);
+
 insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
@@ -44,3 +51,5 @@ Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title_end')
 
 select * from user;
 select * from board;
+select * from sessions;
+truncate table sessions;

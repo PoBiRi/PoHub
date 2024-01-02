@@ -103,10 +103,10 @@ const LoginBox = styled.div`
   overflow: hidden;
 
   &.active {
-    animation: ${fadeIn} 2s forwards ease-in-out;
+    animation: ${fadeIn} 1s forwards ease-in-out;
   }
   &.inactive {
-    animation: ${fadeOut} 2s forwards ease-in-out;
+    animation: ${fadeOut} 1s forwards ease-in-out;
   }
 `;
 
