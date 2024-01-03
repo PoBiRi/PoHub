@@ -23,26 +23,21 @@ app.use(cors({
 app.use(requestIp.mw());
 app.use(express.static(path.join(__dirname, '../build')));
 
-const dbOptions = {
-    host: 'localhost',
-    user: 'host',
-    password: '1234',
-    database: 'pohub',
-    port: '3306',
-};
-
-const sessionStore = new MySQLStore(dbOptions);
+const sessionStore = new MySQLStore({
+    clearExpired: true,
+    checkExpirationInterval: 5000,
+    expiration: 10000,
+}, db);
 
 app.use(
     session({
         httpOnly: true,
-        /*secure: true,*/
         secret: "hello",
         resave: false,
         saveUninitialized: false,
         store: sessionStore,
         cookie: {
-            maxAge: 3600000,
+            maxAge: 10000,
             sameSite: 'lax',
             /*secure: true,
             sameSite: 'none',*/
@@ -71,7 +66,7 @@ app.post('/reqLogin', function(req, res){
             res.status(500).json({ error: 'Internal Server Error' });
         } else {
             if (results.length > 0){
-                console.log('Logined User:', id, 'IP:', clientIp);
+                console.log('Logged In User:', id, 'IP:', clientIp);
                 if(!req.session.userId){
                     req.session.userId = id;
                     req.session.save();
@@ -81,7 +76,7 @@ app.post('/reqLogin', function(req, res){
                 }
                 res.json(true)
             } else {
-                console.log('Logined Denied IP:', clientIp);
+                console.log('Logged In Denied IP:', clientIp);
                 res.json(false)
             }
         }
