@@ -7,7 +7,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const requestIp = require('request-ip');
 const db = require('./db.js');
-const PORT = 4000;
+require('dotenv').config();
+const PORT = process.env.SERVER_PORT;
 const PageLimit = 12;
 
 //app.set('trust proxy', 1);
@@ -32,7 +33,7 @@ const sessionStore = new MySQLStore({
 app.use(
     session({
         httpOnly: true,
-        secret: "hello",
+        secret: process.env.COOKIE_SECRET,
         resave: false,
         saveUninitialized: false,
         store: sessionStore,
