@@ -75,6 +75,7 @@ app.post('/reqLogin', function(req, res){
         } else {
             if (results.length > 0){
                 console.log('Logged In User:', id, 'IP:', clientIp);
+                //세션 저장
                 req.session.userId = id;
                 req.session.save();
                 res.json(true);
