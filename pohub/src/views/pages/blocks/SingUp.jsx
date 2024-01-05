@@ -1,14 +1,12 @@
-// 로그인 모듈
+// 회원가입 모듈
 
 import React, {useRef} from 'react';
-import Swal from 'sweetalert2'; /* 알림창 */ 
 import Button from './Button';
 import styled from 'styled-components';
-import {postData} from '../../../controller/ReqData';
 
 function Login(props) {
-    const {setLogin, setBoxType, active} = props;
-    
+    const {setBoxType, active} = props;
+
     const idRef = useRef();
     const passwordRef = useRef();
 
@@ -20,23 +18,7 @@ function Login(props) {
     };
   
     const handleSignInButton = () => {
-      if(!idRef.current.value || !passwordRef.current.value){
-        Swal.fire({
-          title: 'Error',
-          text: 'There is no ID or password',
-        });
-      } else {
-        const loginData = {
-          id: idRef.current.value,
-          password: passwordRef.current.value,
-        };
-        setLogin();/* undefined */
-        postData('reqLogin', loginData, setLogin);
-      };
-    };
-    
-    const handleSignUpButton =() => {
-      setBoxType(1);
+      setBoxType(0);
     };
   
     return (
@@ -52,15 +34,7 @@ function Login(props) {
         <div>
           <ButtonBox>
             <Button $color='#f59e0b' $hovercolor='#d97706' onClick={handleSignInButton}>
-              Sign In
-            </Button>
-          </ButtonBox>
-          <ButtonBox>
-            <Button $color='#4CAF50' $hovercolor='#45a049' onClick={handleSignUpButton}>
-              Sign up
-            </Button>
-            <Button $color='#f44336' $hovercolor='#d32f2f'>
-              Forgot password?
+              Sign Up
             </Button>
           </ButtonBox>
         </div>

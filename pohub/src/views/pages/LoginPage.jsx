@@ -5,14 +5,16 @@ import styled, { keyframes } from 'styled-components';
 import Logo from '../../testLogo.png';
 import Swal from 'sweetalert2'; /* 알림창 */ 
 import Login from './blocks/Login';
+import SignUp from './blocks/SingUp';
 
 function LoginPage(props) {
-  const [loginToggle, setLoginToggle] = useState();
+  const [sideBoxToggle, setSideBoxToggle] = useState();
   const [login, setLogin] = useState();
+  const [boxType, setBoxType] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(login) {navigate('/Pages'); return}
+    if(login) { navigate('/Pages'); return}
     else if(login === false) {
       Swal.fire({
         title: 'Error',
@@ -22,19 +24,22 @@ function LoginPage(props) {
   // eslint-disable-next-line
   },[login]);
 
-  const openLogin = () => {
-    setLoginToggle(!loginToggle);
+  const openSideBox = () => {
+    setSideBoxToggle(!sideBoxToggle);
   };
 
   return (
     <Container>
       <Box>
-        <LogoBox onClick={openLogin}>
+        <LogoBox onClick={openSideBox}>
           <Img alt="Logo" src={Logo} />
         </LogoBox>
-        <LoginBox className={loginToggle ? 'active' : loginToggle === false ? 'inactive' : ''}>
-          <Login setLogin = {setLogin} />
-        </LoginBox>
+        <SideBox className={sideBoxToggle ? 'active' : sideBoxToggle === false ? 'inactive' : ''}>
+          <Login setLogin = {setLogin} setBoxType = {setBoxType}
+          active={boxType === 0 ? true : false} />
+          <SignUp setBoxType = {setBoxType}
+          active={boxType === 1 ? true : false} />
+        </SideBox>
       </Box>
     </Container>
   )
@@ -94,7 +99,7 @@ const fadeOut = keyframes`
   }
 `;
 
-const LoginBox = styled.div`
+const SideBox = styled.div`
   height: 100%;
   width: 0;
   display: flex;

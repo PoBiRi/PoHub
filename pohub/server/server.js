@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 const sessionStore = new MySQLStore({
     clearExpired: true,
     checkExpirationInterval: 5000,
-    expiration: 10000,
+    expiration: 3600000,
 }, db);
 
 app.use(
@@ -37,7 +37,7 @@ app.use(
         saveUninitialized: false,
         store: sessionStore,
         cookie: {
-            maxAge: 10000,
+            maxAge: 3600000,
             sameSite: 'lax',
             /*secure: true,
             sameSite: 'none',*/
@@ -54,6 +54,14 @@ app.get('/clientIp', function(req, res){
     console.log('Client IP:', clientIp);
 });
 
+app.get('/isLoggedIn', function(req, res) {
+    if(!req.session.userId){
+        res.json(false);
+    } else {
+        res.json(true);
+    }
+});
+
 //로그인 요청
 app.post('/reqLogin', function(req, res){
     const clientIp = req.clientIp;
@@ -67,17 +75,12 @@ app.post('/reqLogin', function(req, res){
         } else {
             if (results.length > 0){
                 console.log('Logged In User:', id, 'IP:', clientIp);
-                if(!req.session.userId){
-                    req.session.userId = id;
-                    req.session.save();
-                    console.log('set');
-                }else{
-                    console.log(req.session.userId);
-                }
-                res.json(true)
+                req.session.userId = id;
+                req.session.save();
+                res.json(true);
             } else {
                 console.log('Logged In Denied IP:', clientIp);
-                res.json(false)
+                res.json(false);
             }
         }
     });
