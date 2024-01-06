@@ -4,6 +4,7 @@ import Logo from '../../../logo.png';
 
 function Sidebar(props) {
   const navigate = useNavigate();
+
   return (
     <SidebarBox>
       <LogoBox>
@@ -25,11 +26,13 @@ function Sidebar(props) {
 export default Sidebar;
 
 const SidebarBox = styled.aside`
-  display: flex;
-  flex-direction: column;
   width: 200px;
+  height: calc(100% - 16px);
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
   background-color: #565254;
-  padding: 0.25rem;
+  padding: 8px;
 `;
 
 const LogoBox = styled.div`

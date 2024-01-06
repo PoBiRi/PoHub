@@ -56,7 +56,7 @@ app.get('/clientIp', function(req, res){
 });
 
 app.get('/isLoggedIn', function(req, res) {
-    if(!req.session.userId){
+    if(!req.session.isLoggedIn){
         res.json(false);
     } else {
         res.json(true);
@@ -78,6 +78,7 @@ app.post('/reqLogin', function(req, res){
                 console.log('Logged In User:', id, 'IP:', clientIp);
                 //세션 저장
                 req.session.userId = id;
+                req.session.isLoggedIn = true;
                 req.session.save();
                 res.json(true);
             } else {
@@ -105,6 +106,7 @@ app.get('/getSectionx', function(req, res){
     //console.log('search boardType');
 });
 
+//게시판의 페이지 검색
 app.get('/countBoard', function(req, res){
     const {boardType} = req.query;
     const query = 'SELECT count(*) as max FROM board WHERE board_type = ?';

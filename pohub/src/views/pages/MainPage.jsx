@@ -1,23 +1,30 @@
+//메인페이지 모듈
+
+import {useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Sidebar from './blocks/Sidebar';
 import Header from './blocks/Header';
 import Section from './blocks/Section';
 import NotFound from './NotFound';
 
 function MainPage(props) {
+  const [sidebarToggle, setSidebarToggle] = useState();
+
   return (
     <Box>
-      <Header />
+      <Header setSidebarToggle={setSidebarToggle} sidebarToggle={sidebarToggle}/>
       <MainBox>
-          <Sidebar />
-          <Main>
-            <Routes>
-              <Route path='/:boardType/:pageNum' element={<Section />} />
-              {/* 외의 주소 모두 NotFound */}
-              <Route path='/*' element={<NotFound />} />
-            </Routes>
-          </Main>
+        <SideToggle className={sidebarToggle ? 'active' : sidebarToggle === false ? 'inactive' : ''}>
+          <Sidebar  />
+        </SideToggle>
+        <Main>
+          <Routes>
+            <Route path='/:boardType/:pageNum' element={<Section />} />
+            {/* 외의 주소 모두 NotFound */}
+            <Route path='/*' element={<NotFound />} />
+          </Routes>
+        </Main>
       </MainBox>
     </Box>
   )
@@ -29,10 +36,47 @@ const Box = styled.div`
   height: 100vh;
 `;
 
+//높이는 header의 높이만큼 뺌
 const MainBox = styled.div`
   display: flex;
-  height: calc(100vh - 1rem);
+  height: calc(100vh - 1rem); 
 `;
+
+const fadeIn = keyframes`
+  0% {
+    transform: translateX(-216px);
+    width: 0;
+  }
+  100% {
+    transform: translateX(0);
+    width: 216px;
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    transform: translateX(0);
+    width: 216px;
+  }
+  100% {
+    transform: translateX(-216px);
+    width: 0;
+  }
+`;
+
+const SideToggle = styled.div`
+  transform: translateX(-216px);
+  width: 0;
+  overflow: visible;
+
+  &.active {
+    animation: ${fadeIn} 0.3s forwards ease-in-out;
+  }
+  &.inactive {
+    animation: ${fadeOut} 0.3s forwards ease-in-out;
+  }
+`;
+
 
 const Main = styled.main`
   flex: 1;

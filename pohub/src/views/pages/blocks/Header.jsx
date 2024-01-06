@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
 function Header(props) {
+  const {setSidebarToggle, sidebarToggle} = props;
+
+  const oepnSidebar = () => {
+    setSidebarToggle(!sidebarToggle);
+  }
+
   return (
     <HeaderContainer>
-      <Search/>
+      <Search onClick={oepnSidebar}/>
       <UserIcon />
     </HeaderContainer>
   )

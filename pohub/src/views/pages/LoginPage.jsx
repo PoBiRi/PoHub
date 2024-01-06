@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from 'styled-components';
 /*import Logo from '../../logo.png';*/
@@ -108,10 +108,10 @@ const SideBox = styled.div`
   overflow: hidden;
 
   &.active {
-    animation: ${fadeIn} 1s forwards ease-in-out;
+    animation: ${fadeIn} 0.5s forwards ease-in-out;
   }
   &.inactive {
-    animation: ${fadeOut} 1s forwards ease-in-out;
+    animation: ${fadeOut} 0.5s forwards ease-in-out;
   }
 `;
 

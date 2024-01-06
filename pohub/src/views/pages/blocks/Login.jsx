@@ -1,6 +1,6 @@
 // 로그인 모듈
 
-import React, {useRef} from 'react';
+import {useRef} from 'react';
 import Swal from 'sweetalert2'; /* 알림창 */ 
 import Button from './Button';
 import styled from 'styled-components';

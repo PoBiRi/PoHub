@@ -1,6 +1,6 @@
 // 회원가입 모듈
 
-import React, {useRef} from 'react';
+import {useRef} from 'react';
 import Button from './Button';
 import styled from 'styled-components';
 
@@ -23,14 +23,14 @@ function Login(props) {
   
     return (
       <LoginForm onKeyDown={hadleEnterDown} className={active ? '' : 'inactive'}>
-        <Lable htmlFor='id'>
+        <Lable htmlFor='signUpID'>
           ID
         </Lable>
-        <Input id="id" ref={idRef} placeholder="Enter your ID" type="text"/>
-        <Lable htmlFor="password">
+        <Input id="signUpID" ref={idRef} placeholder="Enter your ID" type="text"/>
+        <Lable htmlFor="signUpPassword">
           PASSWORD
         </Lable>
-        <Input id="password" ref={passwordRef} placeholder="Enter your password" type="password"/>
+        <Input id="signUpPassword" ref={passwordRef} placeholder="Enter your password" type="password"/>
         <div>
           <ButtonBox>
             <Button $color='#f59e0b' $hovercolor='#d97706' onClick={handleSignInButton}>
