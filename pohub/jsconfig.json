@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": "src",
         "paths": {
-             "img": ["././PoHub_Share/img"]
+            "img/*": ["../../../PoHub_Share/img/*"]
         }
     }
 }

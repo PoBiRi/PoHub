@@ -25,7 +25,7 @@ create table board (
 create table file (
 	file_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     board_id int,
-    file_dir varchar(30),
+    file_dir varchar(100),
     file_type enum('img', 'file', 'video'),
     foreign key (board_id) references board(board_id)
 );
@@ -49,7 +49,11 @@ Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title3');
 insert into board(writter, board_type, created_at, cnt, title)
 Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title_end');
 
+insert into file(board_id,  file_dir, file_type)
+Values(2, 'http://www.pobijunior.com/img/test.png', 'img');
+
 select * from user;
 select * from board;
+select * from file;
 select * from sessions;
 truncate table sessions;

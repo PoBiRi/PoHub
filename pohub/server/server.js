@@ -132,12 +132,25 @@ app.get('/getBoard', function(req, res){
             console.error('Error executing MySQL query:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         } else {
-            console.log(results);
             res.json(results);
         }
     });
 });
 
+//게시판 파일 불러오기
+app.get('/getFile', function(req, res){
+    const {boardID} = req.query;
+    const query = 'SELECT file_dir, file_type FROM file WHERE board_id = ?';
+    
+    db.query(query, [boardID], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
 
 //파일 다운로드
 app.get('/DL/:fileName', function(req, res) {
@@ -146,6 +159,13 @@ app.get('/DL/:fileName', function(req, res) {
 
     console.log('Client IP:', clientIp);
     res.download(path.join(__dirname, '../../../PoHub_Share', fileName));
+});
+
+//이미지 서비스
+app.get('/img/:fileName', function(req, res) {
+    const fileName = req.params.fileName;
+
+    res.sendFile(path.join(__dirname, '../../../PoHub_Share/img', fileName));
 });
 
 app.get('*', function(req, res){
