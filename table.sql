@@ -51,6 +51,8 @@ Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title_end')
 
 insert into file(board_id,  file_dir, file_type)
 Values(2, 'http://www.pobijunior.com/img/test.png', 'img');
+insert into file(board_id,  file_dir, file_type)
+Values(1, 'http://www.pobijunior.com/img/manukyaru.png', 'img');
 
 select * from user;
 select * from board;

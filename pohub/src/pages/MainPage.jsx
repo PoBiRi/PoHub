@@ -36,6 +36,7 @@ export default MainPage;
 
 const Box = styled.div`
   height: 100vh;
+  width: 100vw;
 `;
 
 //높이는 header의 높이만큼 뺌
@@ -78,7 +79,6 @@ const SideToggle = styled.div`
     animation: ${fadeOut} 0.3s forwards ease-in-out;
   }
 `;
-
 
 const Main = styled.main`
   flex: 1;
