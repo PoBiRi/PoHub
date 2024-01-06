@@ -1,22 +1,23 @@
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
-import Logo from '../../../logo.png';
+import Logo from '../../../testLogo.png';
 
 function Sidebar(props) {
   const navigate = useNavigate();
 
   return (
     <SidebarBox>
-      <LogoBox>
-        <LogoImg src={Logo} alt='Nothing Here' onClick={() => navigate("/Pages")}/>
+      <LogoBox onClick={() => navigate("/Pages")}>
+        <LogoImg src={Logo} alt='Nothing Here'/>
+        <SiteName>PoHub</SiteName>
       </LogoBox>
       <ThreadContainer>
-          <Thredx onClick={() => navigate("/Pages/freeBoard/1")}>
-            자유게시판  
-          </Thredx>
-          <Thredx className="threadx" onClick={() => navigate("/Pages/fileShare/1")}>
-            자료저장소
-          </Thredx>
+        <Thredx onClick={() => navigate("/Pages/freeBoard/1")}>
+          자유게시판  
+        </Thredx>
+        <Thredx onClick={() => navigate("/Pages/fileShare/1")}>
+          자료저장소
+        </Thredx>
       </ThreadContainer>
       <Footer onClick={() => navigate("/")}/>
     </SidebarBox>
@@ -25,6 +26,7 @@ function Sidebar(props) {
 
 export default Sidebar;
 
+//#565254
 const SidebarBox = styled.aside`
   width: 200px;
   height: calc(100% - 16px);
@@ -36,19 +38,26 @@ const SidebarBox = styled.aside`
 `;
 
 const LogoBox = styled.div`
-  margin-bottom: 2rem;
+  display: flex;
+  margin-bottom: 32px;
+  height: 64px;
   width: 100%;
 `;
 
 const LogoImg = styled.img`
-  width: 100%;
   height: 100%;
   object-fit: contain;
 `;
 
+const SiteName = styled.div`
+  font-size: 32px;
+  margin-left: 16px;
+  line-height: 64px;
+`;
+
 const ThreadContainer = styled.div`
   flex: 1;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
   overflow: auto;
   flex-grow: 1;
 
@@ -58,11 +67,11 @@ const ThreadContainer = styled.div`
 `;
 
 const Thredx = styled.div`
-  margin-bottom: 0.5rem;
-  height: 1rem;
+  margin-bottom: 16px;
+  height: 16px;
   width: 100%;
-  line-height: 1rem;
-  font-size: 0.75rem;
+  line-height: 16px;
+  font-size: 16px;
 `;
 
 const Footer = styled.div`
