@@ -1,22 +1,25 @@
 import styled from 'styled-components';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Logo from 'testLogo.png';
 
 function Sidebar(props) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <SidebarBox>
       <LogoBox onClick={() => navigate("/Pages")}>
         <LogoImg src={Logo} alt='Nothing Here'/>
-        <SiteName>PoHub</SiteName>
+        <TextBox fontSize='32px' marginleft='20px'>PoHub</TextBox>
       </LogoBox>
       <ThreadContainer>
         <Thredx onClick={() => navigate("/Pages/freeBoard/1")}>
-          자유게시판  
+          <ToggleIcon isToggle={location.pathname.includes('freeBoard')}/>
+          <TextBox fontSize='16px' marginleft='12px'>자유게시판</TextBox>
         </Thredx>
         <Thredx onClick={() => navigate("/Pages/fileShare/1")}>
-          자료저장소
+          <ToggleIcon isToggle={location.pathname.includes('fileShare')}/>
+          <TextBox fontSize='16px' marginleft='12px'>자료저장소</TextBox>
         </Thredx>
       </ThreadContainer>
       <Footer onClick={() => navigate("/")}>
@@ -27,6 +30,24 @@ function Sidebar(props) {
 }
 
 export default Sidebar;
+
+const ToggleIcon = (props) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className="feather feather-toggle-right">
+        <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
+        <circle cx={props.isToggle ? '16' : '8'} cy="12" r="3"></circle>
+      </svg>
+  )
+}
 
 //#565254
 const SidebarBox = styled.aside`
@@ -52,9 +73,9 @@ const LogoImg = styled.img`
   object-fit: contain;
 `;
 
-const SiteName = styled.div`
-  font-size: 32px;
-  margin: 0 auto;
+const TextBox = styled.div`
+  font-size: ${props => props.fontSize};
+  margin-left: ${props => props.marginleft};
 `;
 
 const ThreadContainer = styled.div`
@@ -69,11 +90,9 @@ const ThreadContainer = styled.div`
 `;
 
 const Thredx = styled.div`
-  margin-bottom: 16px;
-  height: 16px;
-  width: 100%;
-  line-height: 16px;
-  font-size: 16px;
+  display: flex;
+  margin: 0 0 16px 8px;
+  align-items: center;
 `;
 
 const Footer = styled.div`

@@ -26,7 +26,7 @@ function Section(props) {
   return (
     <SectionContianer ref={myRef}>
       {boardData.map((data) => (
-        <Boardx key={data.board_id} onClick={() => navigate(`/Pages/board/${data.board_id}`)}>{data.board_id} {data.cnt}</Boardx>
+        <Boardx key={data.board_id} onClick={() => navigate(`/Pages/${data.board_type}/board/${data.board_id}`)}>{data.board_id} {data.cnt}</Boardx>
       ))}
       <Paging max = {max} pageNum = {pageNum} />
     </SectionContianer>

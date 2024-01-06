@@ -17,11 +17,11 @@ function MainPage(props) {
       <Header setSidebarToggle={setSidebarToggle} sidebarToggle={sidebarToggle}/>
       <MainBox>
         <SideToggle className={sidebarToggle ? 'active' : sidebarToggle === false ? 'inactive' : ''}>
-          <Sidebar  />
+          <Sidebar />
         </SideToggle>
         <Main>
           <Routes>
-            <Route path='/board/:boardID' element={<Board />} />
+            <Route path='/:boardType/board/:boardID' element={<Board />} />
             <Route path='/:boardType/:pageNum' element={<Section />} />
             {/* 외의 주소 모두 NotFound */}
             <Route path='/*' element={<NotFound />} />

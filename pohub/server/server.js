@@ -140,7 +140,7 @@ app.get('/getBoard', function(req, res){
 //게시판 파일 불러오기
 app.get('/getFile', function(req, res){
     const {boardID} = req.query;
-    const query = 'SELECT file_dir, file_type FROM file WHERE board_id = ?';
+    const query = 'SELECT file_id, file_dir, file_type FROM file WHERE board_id = ?';
     
     db.query(query, [boardID], (err, results) => {
         if(err) {
