@@ -46,25 +46,23 @@ const MainBox = styled.div`
 `;
 
 const fadeIn = keyframes`
-  0% {
-    transform: translateX(-152px);
-    width: 64px;
-  }
-  100% {
-    transform: translateX(0);
-    width: 216px;
-  }
+  0% { transform: translateX(-152px); width: 64px; }
+  100% { transform: translateX(0); width: 216px; }
 `;
 
 const fadeOut = keyframes`
-  0% {
-    transform: translateX(0);
-    width: 216px;
-  }
-  100% {
-    transform: translateX(-152px);
-    width: 64px;
-  }
+  0% { transform: translateX(0); width: 216px; }
+  100% { transform: translateX(-152px); width: 64px; }
+`;
+
+const fadeInMobile = keyframes`
+  0% { transform: translateX(-152px); }
+  100% { transform: translateX(0); }
+`;
+
+const fadeOutMobile = keyframes`
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-152px); }
 `;
 
 const SideToggle = styled.div`
@@ -77,6 +75,15 @@ const SideToggle = styled.div`
   }
   &.inactive {
     animation: ${fadeOut} 0.3s forwards ease-in-out;
+  }
+
+  @media screen and (max-width: 600px){
+    &.active {
+      animation: ${fadeInMobile} 0.3s forwards ease-in-out;
+    }
+    &.inactive {
+      animation: ${fadeOutMobile} 0.3s forwards ease-in-out;
+    }
   }
 `;
 

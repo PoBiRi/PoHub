@@ -29,7 +29,7 @@ function Section(props) {
         <div style={{marginLeft : "4px"}} onClick={() => navigate(`/Pages/${boardType}/1`)}>{Types[boardType]}</div>
         <WriteButton>
           <WriteIcon />
-          <TextBox fontSize='24px' marginleft='12px'>글쓰기</TextBox>
+          <TextBox>글쓰기</TextBox>
         </WriteButton>
       </InfoBox>
       <SectionContianer ref={myRef}>
@@ -79,8 +79,13 @@ const WriteButton = styled.div`
 `;
 
 const TextBox = styled.div`
-  font-size: ${props => props.fontSize};
-  margin-left: ${props => props.marginleft};
+  font-size: 24px;
+  margin-left: 12px;
+
+  @media screen and (max-width: 600px){
+    font-size: 12px;
+    margin-left: 4px;
+  }
 `;
 
 const SectionContianer = styled.section`
@@ -99,6 +104,14 @@ const SectionContianer = styled.section`
 
     & > :nth-last-child(-n + 1) {
       grid-column: span 5;
+    }
+  }
+
+  @media screen and (max-width: 600px){
+    grid-template-columns: repeat(1, 1fr);
+
+    & > :nth-last-child(-n + 1) {
+      grid-column: span 1;
     }
   }
   
