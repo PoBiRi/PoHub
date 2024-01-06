@@ -17,7 +17,7 @@ function MainPage(props) {
       <Header setSidebarToggle={setSidebarToggle} sidebarToggle={sidebarToggle}/>
       <MainBox>
         <SideToggle className={sidebarToggle ? 'active' : sidebarToggle === false ? 'inactive' : ''}>
-          <Sidebar />
+          <Sidebar sidebarToggle={sidebarToggle}/>
         </SideToggle>
         <Main>
           <Routes>
@@ -47,8 +47,8 @@ const MainBox = styled.div`
 
 const fadeIn = keyframes`
   0% {
-    transform: translateX(-216px);
-    width: 0;
+    transform: translateX(-152px);
+    width: 64px;
   }
   100% {
     transform: translateX(0);
@@ -62,14 +62,14 @@ const fadeOut = keyframes`
     width: 216px;
   }
   100% {
-    transform: translateX(-216px);
-    width: 0;
+    transform: translateX(-152px);
+    width: 64px;
   }
 `;
 
 const SideToggle = styled.div`
-  transform: translateX(-216px);
-  width: 0;
+  transform: translateX(-152px);
+  width: 64px;
   overflow: visible;
 
   &.active {

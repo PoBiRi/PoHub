@@ -20,7 +20,7 @@ app.use(cors({
     origin: true,
     //origin: ['http://www.pobijunior.com', 'http://localhost:3000'],
     credentials: true,
-})); //withCredentials
+}));
 app.use(requestIp.mw());
 app.use(express.static(path.join(__dirname, '../build')));
 
