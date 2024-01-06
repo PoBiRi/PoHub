@@ -93,7 +93,7 @@ app.post('/reqLogin', function(req, res){
 app.get('/getSectionx', function(req, res){
     const {boardType, pageNum} = req.query;
     const sn = (parseInt(pageNum) - 1) * PageLimit;
-    const query = 'SELECT * FROM board WHERE board_type = ? LIMIT ?, ?';
+    const query = 'SELECT * FROM board WHERE board_type = ? ORDER BY created_at DESC LIMIT ?, ?';
 
     db.query(query, [boardType, sn, PageLimit], (err, results) => {
         if (err) {
