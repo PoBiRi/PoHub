@@ -27,10 +27,6 @@ function Board(props) {
         {boardData.map((data) => (
           data.cnt
         ))}
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
       </BoardContainer>
     </div>
   )
