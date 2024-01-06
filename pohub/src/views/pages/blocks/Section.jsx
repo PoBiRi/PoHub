@@ -40,8 +40,16 @@ const SectionContianer = styled.section`
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 
-  > :nth-last-child(-n + 1) {
+  & > :nth-last-child(-n + 1) {
     grid-column: span 3; /* 마지막 칸은 페이징을 위해 3칸짜리로 표시 */
+  }
+
+  @media screen and (min-width: 1000px){
+    grid-template-columns: repeat(5, 1fr);
+    
+    & > :nth-last-child(-n + 1) {
+      grid-column: span 5;
+    }
   }
   
   &::-webkit-scrollbar {
@@ -60,7 +68,7 @@ const SectionContianer = styled.section`
 `;
 
 const Boardx = styled.div`
-  background-color: #D0CFCF;
+  background-color: #ffffff;
   padding: 1rem;
-  height: 8rem;
+  height: 4rem;
 `;

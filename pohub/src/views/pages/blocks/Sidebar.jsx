@@ -33,7 +33,7 @@ const SidebarBox = styled.aside`
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  background-color: #565254;
+  background-color: #FFF0F5;
   padding: 8px;
 `;
 
@@ -42,6 +42,7 @@ const LogoBox = styled.div`
   margin-bottom: 32px;
   height: 64px;
   width: 100%;
+  align-items: center;
 `;
 
 const LogoImg = styled.img`
@@ -51,8 +52,7 @@ const LogoImg = styled.img`
 
 const SiteName = styled.div`
   font-size: 32px;
-  margin-left: 16px;
-  line-height: 64px;
+  margin: 0 auto;
 `;
 
 const ThreadContainer = styled.div`

@@ -83,5 +83,5 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background-color: #f3f4f6; /*#D0CFCF*/
+  background-color: #FFFAFA;
 `;

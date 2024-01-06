@@ -50,7 +50,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh; 
-  background-color: #f3f4f6; 
+  background-color: #FFF0F5; 
 `;
 
 const Box = styled.div`
