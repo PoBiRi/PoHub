@@ -6,7 +6,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const requestIp = require('request-ip');
-const db = require('./db.js');
+const {db, sessionDB} = require('./db.js');
 require('dotenv').config();
 const PORT = process.env.SERVER_PORT;
 const PageLimit = 12;
@@ -26,9 +26,9 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 const sessionStore = new MySQLStore({
     clearExpired: true,
-    checkExpirationInterval: 5000,
+    checkExpirationInterval: 1200000,
     expiration: 3600000,
-}, db);
+}, sessionDB);
 
 app.use(
     session({
