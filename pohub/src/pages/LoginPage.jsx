@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from 'styled-components';
 /*import Logo from '../../logo.png';*/
-import Logo from '../../testLogo.png';
+import Logo from 'testLogo.png';
 import Swal from 'sweetalert2'; /* 알림창 */ 
 import Login from './blocks/Login';
 import SignUp from './blocks/SingUp';

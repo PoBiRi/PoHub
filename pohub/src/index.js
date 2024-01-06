@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import MainPage from './views/pages/MainPage';
-import LoginPage from './views/pages/LoginPage';
-import NotFound from './views/pages/NotFound';
-import {getData} from './controller/ReqData';
+import MainPage from 'pages/MainPage';
+import LoginPage from 'pages/LoginPage';
+import NotFound from 'pages/NotFound';
+import {getData} from 'controller/ReqData';
 
 function App(props) {
   useEffect(() =>{

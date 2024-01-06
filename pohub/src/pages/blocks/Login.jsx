@@ -4,7 +4,7 @@ import {useRef} from 'react';
 import Swal from 'sweetalert2'; /* 알림창 */ 
 import Button from './Button';
 import styled from 'styled-components';
-import {postData} from '../../../controller/ReqData';
+import {postData} from 'controller/ReqData';
 
 function Login(props) {
     const {setLogin, setBoxType, active} = props;

@@ -122,6 +122,23 @@ app.get('/countBoard', function(req, res){
     //console.log('count Board');
 });
 
+//게시판 불러오기
+app.get('/getBoard', function(req, res){
+    const {boardID} = req.query;
+    const query = 'SELECT * FROM board WHERE board_id = ?';
+    
+    db.query(query, [boardID], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            console.log(results);
+            res.json(results);
+        }
+    });
+});
+
+
 //파일 다운로드
 app.get('/DL/:fileName', function(req, res) {
     const clientIp = req.clientIp;

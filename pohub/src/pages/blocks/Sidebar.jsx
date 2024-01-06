@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
-import Logo from '../../../testLogo.png';
+import Logo from 'testLogo.png';
 
 function Sidebar(props) {
   const navigate = useNavigate();
@@ -19,7 +19,9 @@ function Sidebar(props) {
           자료저장소
         </Thredx>
       </ThreadContainer>
-      <Footer onClick={() => navigate("/")}/>
+      <Footer onClick={() => navigate("/")}>
+        Nothing Here
+      </Footer>
     </SidebarBox>
   )
 }
@@ -77,5 +79,4 @@ const Thredx = styled.div`
 const Footer = styled.div`
   height: 6rem;
   width: 100%;
-  background-color: black;
 `;

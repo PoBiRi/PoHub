@@ -6,6 +6,7 @@ import styled, { keyframes } from 'styled-components';
 import Sidebar from './blocks/Sidebar';
 import Header from './blocks/Header';
 import Section from './blocks/Section';
+import Board from './blocks/Board';
 import NotFound from './NotFound';
 
 function MainPage(props) {
@@ -20,6 +21,7 @@ function MainPage(props) {
         </SideToggle>
         <Main>
           <Routes>
+            <Route path='/board/:boardID' element={<Board />} />
             <Route path='/:boardType/:pageNum' element={<Section />} />
             {/* 외의 주소 모두 NotFound */}
             <Route path='/*' element={<NotFound />} />

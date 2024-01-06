@@ -1,16 +1,17 @@
 import styled from 'styled-components';
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { getData } from '../../../controller/ReqData';
-import ToNF from '../../../controller/ToNF';
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getData } from 'controller/ReqData';
+import ToNF from 'controller/ToNF';
 import Paging from './Paging';
 
 function Section(props) {
   const Types = ['freeBoard', 'fileShare'];
   const { boardType, pageNum } = useParams();
-  const [boardData, setBoardData] = useState([]);
-  const [max, setMax] = useState();
+  const [ boardData, setBoardData ] = useState([]);
+  const [ max, setMax ] = useState();
   const myRef = useRef();
+  const navigate = useNavigate();
   
   useEffect(() => {
     if(Types.indexOf(boardType) < 0){
@@ -25,7 +26,7 @@ function Section(props) {
   return (
     <SectionContianer ref={myRef}>
       {boardData.map((data) => (
-        <Boardx key={data.board_id}>{data.board_id} {data.cnt}</Boardx>
+        <Boardx key={data.board_id} onClick={() => navigate(`/Pages/board/${data.board_id}`)}>{data.board_id} {data.cnt}</Boardx>
       ))}
       <Paging max = {max} pageNum = {pageNum} />
     </SectionContianer>
@@ -46,7 +47,7 @@ const SectionContianer = styled.section`
 
   @media screen and (min-width: 1000px){
     grid-template-columns: repeat(5, 1fr);
-    
+
     & > :nth-last-child(-n + 1) {
       grid-column: span 5;
     }
