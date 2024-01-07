@@ -41,7 +41,9 @@ function Board(props) {
           </InfoBox>
         ))}
         {fileData.map((data) => (
-          <ImgBox key={data.file_type + data.file_id} src={data.file_dir} alt='Nothing' />
+          <ImgContainer>
+            <ImgBox key={data.file_type + data.file_id} src={data.file_dir} alt='Nothing' />
+          </ImgContainer>
         ))}
         {boardData.map((data) => (
           <div key={boardType}>{data.cnt}</div>
@@ -92,7 +94,15 @@ const BoardContainer = styled.div`
   }
 `;
 
+const ImgContainer = styled.div`
+  max-height: 600px;
+  max-width: 600px;
+`;
+
 const ImgBox = styled.img`
   width: 100%;
-  max-width: 700px;
+  object-position:0 0;
+  max-height: 600px;
+  max-width: 600px;
+  object-fit: contain;
 `;
