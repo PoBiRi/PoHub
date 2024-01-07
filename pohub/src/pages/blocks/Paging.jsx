@@ -15,7 +15,7 @@ export default function Paging(props) {
       <Button onClick={() => changePage(max, parseInt(pageNum) - 1)}>
         <ArrowLeftIcon />
       </Button>
-      {pageNum}
+      {pageNum} / {max}
       <Button onClick={() => changePage(max, parseInt(pageNum) + 1)}>
         <ArrowRightIcon />
       </Button>
@@ -24,33 +24,33 @@ export default function Paging(props) {
 }
 
 const Buttonx = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 `;
 
 const Button = styled.div`
-    width: 40px;
-    height: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border: 1px solid currentColor;
-    outline: none;
-    transition: background-color 0.3s ease-in-out;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid currentColor;
+  outline: none;
+  transition: background-color 0.3s ease-in-out;
 
-    &:hover {
-        background-color: #e5e7eb;
-    }
+  &:hover {
+      background-color: #e5e7eb;
+  }
 
-    &:focus {
-        box-shadow: 0 0 0 3px rgba(66, 154, 255, 0.5);
-    }
+  &:focus {
+      box-shadow: 0 0 0 3px rgba(66, 154, 255, 0.5);
+  }
 `;
 
 function ArrowLeftIcon(props) {
