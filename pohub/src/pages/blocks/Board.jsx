@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect} from 'react';
-import { useParams, useNavigate  } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getData } from 'controller/ReqData';
 
 function Board(props) {
@@ -13,6 +13,7 @@ function Board(props) {
   useEffect(() => {
     getData(`getBoard?boardID=${boardID}`, setBoardData);
     getData(`getFile?boardID=${boardID}`, setFileData);
+  // eslint-disable-next-line
   }, [boardID])
   
   const formatDate = (originalDateString) => {

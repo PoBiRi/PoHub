@@ -60,6 +60,7 @@ app.get('/isLoggedIn', function(req, res) {
         res.json(false);
     } else {
         res.json(true);
+        req.session.save();
     }
 });
 

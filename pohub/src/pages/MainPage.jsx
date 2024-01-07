@@ -1,16 +1,39 @@
 //메인페이지 모듈
 
-import {useState} from 'react';
-import {Routes, Route} from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
+import Swal from 'sweetalert2';
 import Sidebar from './blocks/Sidebar';
 import Header from './blocks/Header';
 import Section from './blocks/Section';
 import Board from './blocks/Board';
 import NotFound from './NotFound';
+import { getData } from 'controller/ReqData';
 
 function MainPage(props) {
   const [sidebarToggle, setSidebarToggle] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLoggedIn === undefined){
+      getData('isLoggedIn', setIsLoggedIn);
+    }
+    if(isLoggedIn === false){
+      Swal.fire({
+        title: 'Error',
+        text: '로그인 후 이용해주세요',
+      });
+      navigate("/");
+    }
+  // eslint-disable-next-line
+  }, [isLoggedIn]);
+
+  // eslint-disable-next-line
+  const checkIsLoggedIn = () => {
+    getData('isLoggedIn', setIsLoggedIn);
+  }
 
   return (
     <Box>
