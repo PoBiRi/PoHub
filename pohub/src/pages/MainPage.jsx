@@ -9,6 +9,7 @@ import Header from './blocks/Header';
 import Section from './blocks/Section';
 import Board from './blocks/Board';
 import WriteBoard  from './blocks/WriteBoard';
+import MainSection from './blocks/MainSection';
 import NotFound from './NotFound';
 import { getData } from 'controller/ReqData';
 
@@ -45,6 +46,7 @@ function MainPage(props) {
         </SideToggle>
         <Main>
           <Routes>
+            <Route path='/' element={<MainSection />} />
             <Route path='/:boardType/write' element={<WriteBoard />} />
             <Route path='/:boardType/board/:boardID' element={<Board />} />
             <Route path='/:boardType/:pageNum' element={<Section checkIsLoggedIn={checkIsLoggedIn} />} />
