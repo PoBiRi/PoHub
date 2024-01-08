@@ -46,7 +46,7 @@ function Board(props) {
           </ImgContainer>
         ))}
         {boardData.map((data) => (
-          <div style={{whiteSpace: 'pre-wrap'}} key={data.board_id + 'cnt'}>
+          <div style={{fontSize: '12px', whiteSpace: 'pre-wrap'}} key={data.board_id + 'cnt'}>
             {data.cnt}
           </div>
         ))}
