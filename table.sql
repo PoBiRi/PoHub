@@ -1,4 +1,5 @@
 use pohub;
+ALTER DATABASE pohub CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 drop table file;
 drop table board;
 drop table user;
@@ -21,6 +22,9 @@ create table board (
     title varchar(30),
     foreign key (writter) references user(user_id)
 );
+ALTER TABLE board CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE board
+MODIFY COLUMN cnt text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 create table file (
 	file_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,

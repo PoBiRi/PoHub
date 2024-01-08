@@ -7,6 +7,7 @@ const db = mysql.createConnection({
     user: 'host',
     password: '1234',
     database: 'pohub',
+    charset: 'utf8mb4',
     port: process.env.DB_PORT
 });
 
