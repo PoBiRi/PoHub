@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const app = express();
@@ -13,7 +14,7 @@ const PageLimit = 15;
 
 //app.set('trust proxy', 1);
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors({
@@ -23,6 +24,32 @@ app.use(cors({
 }));
 app.use(requestIp.mw());
 app.use(express.static(path.join(__dirname, '../build')));
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        let uploadPath;
+
+        //image 계열 파일들만 분류
+        if (file.mimetype.startsWith('image')) {
+          uploadPath = path.join(__dirname, '../../../PoHub_Share/img/');
+        }
+        //다른 계열 파일은 'others'에 저장
+        else {
+          uploadPath = path.join(__dirname, '../../../PoHub_Share/others/');
+        }
+
+        cb(null, uploadPath);
+    },
+    filename: function (req, file, cb){
+        cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+
+//파일들 총용량 최대 크기 500MB
+const upload = multer({
+    limits: { fileSize: 500 * 1024 * 1024 },
+    storage: storage 
+});
 
 const sessionStore = new MySQLStore({
     clearExpired: true,
@@ -53,6 +80,7 @@ app.get('/', function(req, res){
 app.get('/clientIp', function(req, res){
     const clientIp = req.clientIp;
     console.log('Client IP:', clientIp);
+    res.json(true);
 });
 
 app.get('/isLoggedIn', function(req, res) {
@@ -153,16 +181,43 @@ app.get('/getFile', function(req, res){
     });
 });
 
-app.post('/writeBoard', function(req, res){
-    const {title, cnt, boardType} = req.body;
+//게시판 작성
+app.post('/writeBoard', upload.array('files', 5), (req, res) => {
+    const {title, cnt, boardType} = JSON.parse(req.body.json);
     const query = 'INSERT into board(writter, board_type, created_at, cnt, title) VALUES(?, ?, current_timestamp(), ?, ?);';
+    const query2 = 'INSERT into file(board_id, file_dir, file_type) VALUES(?, ?, ?);';
+    
+    const replacePath = (inPath) => {
+        return inPath
+        .replace('D:\\PBR_Work\\PoHub_Share\\', 'http://www.pobijunior.com/')
+        .replace('\\', '/');
+    }
+    const replaceType = (inPath) => {
+        return inPath
+        .replace('D:\\PBR_Work\\PoHub_Share\\', '')
+        .replace('\\', '');
+    }
 
+    //1차 쿼리 게시판 db에 입력
     db.query(query, [req.session.userId, boardType, cnt, title], (err, results) => {
         if(err) {
             console.error('Error executing MySQL query:', err);
             res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            const insertedId = results.insertId;
+            //2차 쿼리 게시판id에 맞는 파일 db에 입력
+            req.files.map((file) => {
+                db.query(query2, [insertedId, replacePath(file.path), replaceType(file.destination)], (err, results) => {
+                    if(err) {
+                        console.error('Error executing MySQL query:', err);
+                        res.status(500).json({ error: 'Internal Server Error' });
+                    }
+                })
+            });
         }
     });
+    
+    res.json(true);
 });
 
 //파일 다운로드

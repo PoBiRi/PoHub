@@ -41,8 +41,8 @@ function Board(props) {
           </InfoBox>
         ))}
         {fileData.map((data) => (
-          <ImgContainer>
-            <ImgBox key={data.file_type + data.file_id} src={data.file_dir} alt='Nothing' />
+          <ImgContainer key={data.file_type + data.file_id}>
+            <ImgBox src={data.file_dir} alt='Nothing' />
           </ImgContainer>
         ))}
         {boardData.map((data) => (
