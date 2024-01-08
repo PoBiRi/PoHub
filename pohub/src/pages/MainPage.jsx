@@ -47,7 +47,7 @@ function MainPage(props) {
           <Routes>
             <Route path='/:boardType/write' element={<WriteBoard />} />
             <Route path='/:boardType/board/:boardID' element={<Board />} />
-            <Route path='/:boardType/:pageNum' element={<Section />} />
+            <Route path='/:boardType/:pageNum' element={<Section checkIsLoggedIn={checkIsLoggedIn} />} />
             {/* 외의 주소 모두 NotFound */}
             <Route path='/*' element={<NotFound />} />
           </Routes>

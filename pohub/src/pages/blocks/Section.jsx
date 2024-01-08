@@ -7,6 +7,7 @@ import Paging from './Paging';
 
 function Section(props) {
   const Types = {'freeBoard': '자유게시판', 'fileShare': '자료저장소'};
+  const { checkIsLoggedIn } = props;
   const { boardType, pageNum } = useParams();
   const [ boardData, setBoardData ] = useState([]);
   const [ max, setMax ] = useState();
@@ -27,14 +28,20 @@ function Section(props) {
     <div>
       <InfoBox>
         <div onClick={() => navigate(`/Pages/${boardType}/1`)}>{Types[boardType]}</div>
-        <WriteButton onClick={() => navigate(`/pages/${boardType}/write`)}>
+        <WriteButton onClick={() => {
+          checkIsLoggedIn(); 
+          navigate(`/pages/${boardType}/write`);
+        }}>
           <WriteIcon />
           <TextBox>글쓰기</TextBox>
         </WriteButton>
       </InfoBox>
       <SectionContianer ref={sectionRef}>
         {boardData.map((data) => (
-          <Boardx key={data.board_id} onClick={() => navigate(`/Pages/${data.board_type}/board/${data.board_id}`)}>
+          <Boardx key={data.board_id} onClick={() =>{
+              checkIsLoggedIn(); 
+              navigate(`/Pages/${data.board_type}/board/${data.board_id}`)
+          }}>
             {data.title}<br/>{data.writter}
           </Boardx>
         ))}

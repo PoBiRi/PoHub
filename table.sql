@@ -60,3 +60,5 @@ select * from file;
 select * from sessions;
 delete from board where board_id > 2;
 truncate table sessions;
+truncate table board;
+truncate table file;
