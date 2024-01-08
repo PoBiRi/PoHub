@@ -34,7 +34,9 @@ function Section(props) {
       </InfoBox>
       <SectionContianer ref={sectionRef}>
         {boardData.map((data) => (
-          <Boardx key={data.board_id} onClick={() => navigate(`/Pages/${data.board_type}/board/${data.board_id}`)}>{data.title}<br/>{data.writter}</Boardx>
+          <Boardx key={data.board_id} onClick={() => navigate(`/Pages/${data.board_type}/board/${data.board_id}`)}>
+            {data.title}<br/>{data.writter}
+          </Boardx>
         ))}
         <Paging max={max} pageNum={pageNum} />
       </SectionContianer>
