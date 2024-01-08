@@ -38,7 +38,6 @@ function WriteBoard(props) {
       });
     } else {
       setLoading(true);
-      console.log(loading);
 
       const formData = new FormData();
 
