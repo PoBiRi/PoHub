@@ -63,15 +63,6 @@ const InfoBox = styled.div`
   margin-bottom: 16px;
 `;
 
-const BoardInfo = styled.div`
-  display: flex;
-  font-size: 24px;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  margin-left: 4px;
-`;
-
 const BoardContainer = styled.div`
   height: calc(100vh - 176px);
   overflow-y: auto;
@@ -94,15 +85,24 @@ const BoardContainer = styled.div`
   }
 `;
 
+const BoardInfo = styled.div`
+  display: flex;
+  font-size: 24px;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  margin-left: 4px;
+`;
+
 const ImgContainer = styled.div`
   max-height: 600px;
   max-width: 600px;
+  padding: 2px;
 `;
 
 const ImgBox = styled.img`
-  width: 100%;
   object-position:0 0;
-  max-height: 600px;
-  max-width: 600px;
+  max-height: 100%;
+  max-width: 100%;
   object-fit: contain;
 `;

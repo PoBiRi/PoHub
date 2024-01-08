@@ -22,4 +22,8 @@ db.connect((error, result) => {
     if (error) console.log(error);
 });
 
+sessionDB.connect((error, result) => {
+    if (error) console.log(error);
+});
+
 module.exports = {db, sessionDB};

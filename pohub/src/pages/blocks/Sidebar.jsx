@@ -133,7 +133,8 @@ const TextBox = styled.div`
 const ThreadContainer = styled.div`
   flex: 1;
   margin-bottom: 32px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   flex-grow: 1;
 
   &::-webkit-scrollbar {
