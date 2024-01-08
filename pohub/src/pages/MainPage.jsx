@@ -8,6 +8,7 @@ import Sidebar from './blocks/Sidebar';
 import Header from './blocks/Header';
 import Section from './blocks/Section';
 import Board from './blocks/Board';
+import WriteBoard  from './blocks/WriteBoard';
 import NotFound from './NotFound';
 import { getData } from 'controller/ReqData';
 
@@ -44,6 +45,7 @@ function MainPage(props) {
         </SideToggle>
         <Main>
           <Routes>
+            <Route path='/:boardType/write' element={<WriteBoard />} />
             <Route path='/:boardType/board/:boardID' element={<Board />} />
             <Route path='/:boardType/:pageNum' element={<Section />} />
             {/* 외의 주소 모두 NotFound */}

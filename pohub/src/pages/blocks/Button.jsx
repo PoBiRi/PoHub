@@ -7,16 +7,16 @@ const Button = styled.button`
     white-space: nowrap;
     text-overflow: ellipsis;
     flex-grow: 1;
-    padding: 10px;
-    background-color: ${props => props.$color};
-    color: #fff;
+    padding: ${props => props.$padding || '10px'};
+    background-color: ${props => props.$color || '#f59e0b'};
+    color: ${props => props.$fontColor || '#fff'};
     font-weight: bold;
     border-radius: 0.2rem;
     transition: background-color 0.3s ease;
     border: none;
   
     &:hover {
-      background-color: ${props => props.$hovercolor};
+      background-color: ${props => props.$hovercolor || '#d97706'};
     }
   
     &:focus {

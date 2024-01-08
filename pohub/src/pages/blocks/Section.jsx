@@ -10,7 +10,7 @@ function Section(props) {
   const { boardType, pageNum } = useParams();
   const [ boardData, setBoardData ] = useState([]);
   const [ max, setMax ] = useState();
-  const myRef = useRef();
+  const sectionRef = useRef();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -19,24 +19,24 @@ function Section(props) {
     }
     getData(`getSectionx?boardType=${boardType}&pageNum=${pageNum}`, setBoardData);
     getData(`countBoard?boardType=${boardType}`, setMax);
-    myRef.current.scrollTop = 0;
+    sectionRef.current.scrollTop = 0;
   // eslint-disable-next-line
   },[boardType, pageNum]);
 
   return (
     <div>
       <InfoBox>
-        <div style={{marginLeft : "4px"}} onClick={() => navigate(`/Pages/${boardType}/1`)}>{Types[boardType]}</div>
-        <WriteButton>
+        <div onClick={() => navigate(`/Pages/${boardType}/1`)}>{Types[boardType]}</div>
+        <WriteButton onClick={() => navigate(`/pages/${boardType}/write`)}>
           <WriteIcon />
           <TextBox>글쓰기</TextBox>
         </WriteButton>
       </InfoBox>
-      <SectionContianer ref={myRef}>
+      <SectionContianer ref={sectionRef}>
         {boardData.map((data) => (
-          <Boardx key={data.board_id} onClick={() => navigate(`/Pages/${data.board_type}/board/${data.board_id}`)}>{data.board_id} {data.cnt}</Boardx>
+          <Boardx key={data.board_id} onClick={() => navigate(`/Pages/${data.board_type}/board/${data.board_id}`)}>{data.title}<br/>{data.writter}</Boardx>
         ))}
-        <Paging max = {max} pageNum = {pageNum} />
+        <Paging max={max} pageNum={pageNum} />
       </SectionContianer>
     </div>
   )
@@ -67,6 +67,7 @@ const InfoBox = styled.div`
   display: flex;
   height: 64px;
   margin-bottom: 16px;
+  padding-left: 4px;
   justify-content: space-between;
 `;
 

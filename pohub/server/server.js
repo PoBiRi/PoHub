@@ -117,7 +117,7 @@ app.get('/countBoard', function(req, res){
             console.error('Error executing MySQL query:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         } else {
-            res.json(Math.trunc(results[0]['max']/PageLimit) + 1);
+            res.json(Math.trunc((results[0]['max']-0.5)/PageLimit) + 1);
         }
     });
     //console.log('count Board');
@@ -149,6 +149,18 @@ app.get('/getFile', function(req, res){
             res.status(500).json({ error: 'Internal Server Error' });
         } else {
             res.json(results);
+        }
+    });
+});
+
+app.post('/writeBoard', function(req, res){
+    const {title, cnt, boardType} = req.body;
+    const query = 'INSERT into board(writter, board_type, created_at, cnt, title) VALUES(?, ?, current_timestamp(), ?, ?);';
+
+    db.query(query, [req.session.userId, boardType, cnt, title], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
         }
     });
 });

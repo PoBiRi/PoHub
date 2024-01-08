@@ -41,13 +41,9 @@ insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
 insert into board(writter, board_type, created_at, cnt, title)
-Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title1');
+Values('testuser', 'freeBoard', current_timestamp(), '여기는 이제부터 캬루가 지배한다', '테스트 게시물 1');
 insert into board(writter, board_type, created_at, cnt, title)
-Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title2');
-insert into board(writter, board_type, created_at, cnt, title)
-Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title3');
-insert into board(writter, board_type, created_at, cnt, title)
-Values('testuser', 'freeBoard', current_timestamp(), 'Hello World', 'title_end');
+Values('testuser', 'freeBoard', current_timestamp(), '카링입니다', '테스트 게시물 2');
 
 insert into file(board_id,  file_dir, file_type)
 Values(2, 'http://www.pobijunior.com/img/test.png', 'img');
@@ -62,4 +58,5 @@ select * from user;
 select * from board;
 select * from file;
 select * from sessions;
+delete from board where board_id > 2;
 truncate table sessions;

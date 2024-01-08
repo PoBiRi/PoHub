@@ -51,7 +51,7 @@ function Login(props) {
         <Input id="password" ref={passwordRef} placeholder="Enter your password" type="password"/>
         <div>
           <ButtonBox>
-            <Button $color='#f59e0b' $hovercolor='#d97706' onClick={handleSignInButton}>
+            <Button onClick={handleSignInButton}>
               Sign In
             </Button>
           </ButtonBox>

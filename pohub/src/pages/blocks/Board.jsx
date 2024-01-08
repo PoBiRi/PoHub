@@ -24,7 +24,7 @@ function Board(props) {
   return (
     <div>
       <InfoBox border='1px solid grey'>
-        <div style={{marginLeft : "4px"}} onClick={() => navigate(`/Pages/${boardType}/1`)}>
+        <div onClick={() => navigate(`/Pages/${boardType}/1`)}>
           {Types[boardType]}
         </div>
       </InfoBox>
@@ -46,7 +46,9 @@ function Board(props) {
           </ImgContainer>
         ))}
         {boardData.map((data) => (
-          <div key={boardType}>{data.cnt}</div>
+          <div style={{whiteSpace: 'pre-wrap'}} key={data.board_id + 'cnt'}>
+            {data.cnt}
+          </div>
         ))}
       </BoardContainer>
     </div>
@@ -61,6 +63,7 @@ const InfoBox = styled.div`
   height: 64px;
   min-height: 64px;
   margin-bottom: 16px;
+  padding-left: 4px;
 `;
 
 const BoardContainer = styled.div`
@@ -91,7 +94,6 @@ const BoardInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 4px;
-  margin-left: 4px;
 `;
 
 const ImgContainer = styled.div`
