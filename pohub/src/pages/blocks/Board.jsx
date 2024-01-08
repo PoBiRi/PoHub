@@ -41,9 +41,11 @@ function Board(props) {
           </InfoBox>
         ))}
         {fileData.map((data) => (
-          <ImgContainer key={data.file_type + data.file_id}>
-            <ImgBox src={data.file_dir} alt='Nothing' />
-          </ImgContainer>
+          data.file_type === 'img' ? (
+            <ImgContainer key={data.file_type + data.file_id}>
+              <ImgBox src={data.file_dir} alt='Nothing' />
+            </ImgContainer>
+          ) : null
         ))}
         {boardData.map((data) => (
           <div style={{fontSize: '12px', whiteSpace: 'pre-wrap'}} key={data.board_id + 'cnt'}>
