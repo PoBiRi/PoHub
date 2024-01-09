@@ -4,6 +4,7 @@ const multer = require('multer');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const app = express();
+const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const requestIp = require('request-ip');
@@ -41,7 +42,7 @@ const storage = multer.diskStorage({
         cb(null, uploadPath);
     },
     filename: function (req, file, cb){
-        cb(null, Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + file.filename + path.extname(file.originalname));
     },
 });
 
@@ -77,12 +78,14 @@ app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
+//클라이언트 ip 확인
 app.get('/clientIp', function(req, res){
     const clientIp = req.clientIp;
     console.log('Client IP:', clientIp);
     res.json(true);
 });
 
+// 로그인 확인 요청
 app.get('/isLoggedIn', function(req, res) {
     if(!req.session.isLoggedIn){
         res.json(false);
@@ -169,7 +172,7 @@ app.get('/getBoard', function(req, res){
 //게시판 파일 불러오기
 app.get('/getFile', function(req, res){
     const {boardID} = req.query;
-    const query = 'SELECT file_id, file_dir, file_type FROM file WHERE board_id = ?';
+    const query = 'SELECT file_id, file_dir, file_type, file_name FROM file WHERE board_id = ?';
     
     db.query(query, [boardID], (err, results) => {
         if(err) {
@@ -185,7 +188,7 @@ app.get('/getFile', function(req, res){
 app.post('/writeBoard', upload.array('files', 5), (req, res) => {
     const {title, cnt, boardType} = JSON.parse(req.body.json);
     const query = 'INSERT into board(writter, board_type, created_at, cnt, title) VALUES(?, ?, current_timestamp(), ?, ?);';
-    const query2 = 'INSERT into file(board_id, file_dir, file_type) VALUES(?, ?, ?);';
+    const query2 = 'INSERT into file(board_id, file_dir, file_type, file_name) VALUES(?, ?, ?, ?);';
     
     const replacePath = (inPath) => {
         return inPath
@@ -197,6 +200,7 @@ app.post('/writeBoard', upload.array('files', 5), (req, res) => {
         .replace('D:\\PBR_Work\\PoHub_Share\\', '')
         .replace('\\', '');
     }
+    console.log(req.files);
 
     //1차 쿼리 게시판 db에 입력
     db.query(query, [req.session.userId, boardType, cnt, title], (err, results) => {
@@ -207,7 +211,7 @@ app.post('/writeBoard', upload.array('files', 5), (req, res) => {
             const insertedId = results.insertId;
             //2차 쿼리 게시판id에 맞는 파일 db에 입력
             req.files.map((file) => {
-                db.query(query2, [insertedId, replacePath(file.path), replaceType(file.destination)], (err, results) => {
+                db.query(query2, [insertedId, replacePath(file.path), replaceType(file.destination), file.filename], (err, results) => {
                     if(err) {
                         console.error('Error executing MySQL query:', err);
                         res.status(500).json({ error: 'Internal Server Error' });
@@ -220,7 +224,7 @@ app.post('/writeBoard', upload.array('files', 5), (req, res) => {
     res.json(true);
 });
 
-//파일 다운로드
+//파일 다운로드 (개인용)
 app.get('/DL/:fileName', function(req, res) {
     const clientIp = req.clientIp;
     const fileName = req.params.fileName;
@@ -234,6 +238,16 @@ app.get('/img/:fileName', function(req, res) {
     const fileName = req.params.fileName;
 
     res.sendFile(path.join(__dirname, '../../../PoHub_Share/img', fileName));
+});
+
+//파일 다운로드 (사이트용)
+app.get('/others/:fileName', function(req, res) {
+    const fileName = req.params.fileName;
+    const filePath = path.join(__dirname, '../../../PoHub_Share/others', fileName);
+
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
 });
 
 app.get('*', function(req, res){

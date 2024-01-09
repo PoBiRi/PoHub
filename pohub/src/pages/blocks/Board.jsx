@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getData } from 'controller/ReqData';
+import { getData, downloadFile } from 'controller/ReqData';
 
 function Board(props) {
   const Types = {'freeBoard': '자유게시판', 'fileShare': '자료저장소'};
@@ -14,7 +14,7 @@ function Board(props) {
     getData(`getBoard?boardID=${boardID}`, setBoardData);
     getData(`getFile?boardID=${boardID}`, setFileData);
   // eslint-disable-next-line
-  }, [boardID])
+  }, [boardID]);
   
   const formatDate = (originalDateString) => {
     const date = new Date(originalDateString);
@@ -42,6 +42,15 @@ function Board(props) {
             </BoardInfo>
           </InfoBox>
         ))}
+        <div style={{display: 'flex'}}>
+          {fileData.map((data) => (
+            data.file_type === 'others' ? (
+              <FileContainer key={'others' + data.board_id} onClick={() => downloadFile(data.file_name)}>
+                {data.file_name}
+              </FileContainer>
+            ) : null
+          ))}
+        </div>
         {fileData.map((data) => (
           data.file_type === 'img' ? (
             <ImgContainer key={data.file_type + data.file_id}>
@@ -98,6 +107,20 @@ const BoardInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 4px;
+`;
+
+const FileContainer = styled.div`
+  font-size: 12px;
+  padding-left: 8px;
+  margin-bottom: 16px;
+  padding-right: 4px;
+  text-decoration: underline;
+  font-style: italic;
+  cursor: pointer;
+
+  &:hover{
+    color: blue;
+  }
 `;
 
 const ImgContainer = styled.div`

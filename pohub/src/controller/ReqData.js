@@ -32,4 +32,23 @@ async function postData(address, inputData, setData) {
   }
 }
 
-export {getData, postData};
+const downloadFile = async (fileName) => {
+  try {
+    const response = await axios.get(domain + `others/${fileName}`, {
+      responseType: 'blob',
+    });
+
+    const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(downloadUrl);
+  } catch (error) {
+    console.error('Error downloading file:', error);
+  }
+};
+
+export {getData, postData, downloadFile};
