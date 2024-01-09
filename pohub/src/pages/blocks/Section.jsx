@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getData } from 'controller/ReqData';
 import ToNF from 'controller/ToNF';
 import Paging from './Paging';
+import NoIMG from 'no_image.png'
 
 function Section(props) {
   const Types = {'freeBoard': '자유게시판', 'fileShare': '자료저장소'};
@@ -24,6 +25,11 @@ function Section(props) {
   // eslint-disable-next-line
   },[boardType, pageNum]);
 
+  const formatDate = (originalDateString) => {
+    const date = new Date(originalDateString);
+    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  };
+
   return (
     <div>
       <InfoBox>
@@ -40,9 +46,35 @@ function Section(props) {
         {boardData.map((data) => (
           <Boardx key={data.board_id} style={{overflow: 'hidden'}} onClick={() =>{
               checkIsLoggedIn(); 
-              navigate(`/Pages/board/${data.board_id}`)
+              navigate(`/Pages/board/${data.board_id}`);
           }}>
-            {data.title}<br/>{data.writter}
+            <ImgContainer>
+              <ImgBox src={`http://pobijunior.com/thumnail/${data.board_id}`} alt='Nothing' 
+                onError={(e)=> {
+                  e.target.src = NoIMG;
+                  e.target.alt = 'Nothing';
+                }}
+              />
+            </ImgContainer>
+            <Info>
+              <div
+                title={data.title} 
+                style={{
+                  paddingBottom: '4px',
+                  fontSize: '20px',
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis'}}
+              >
+                {data.title}
+              </div>
+              <div style={{fontSize: '10px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
+                작성자: {data.writter}
+              </div>
+              <div style={{fontSize: '10px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
+                작성 날짜: {formatDate(data.created_at)}
+              </div>
+            </Info>
           </Boardx>
         ))}
         <Paging max={max} pageNum={pageNum} />
@@ -101,30 +133,14 @@ const TextBox = styled.div`
 const SectionContianer = styled.section`
   height: calc(100vh - 176px);
   overflow: auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 
   & > :nth-last-child(-n + 1) {
-    grid-column: span 3; /* 마지막 칸은 페이징을 위해 3칸짜리로 표시 */
+    width: 100%;
   }
 
-  @media screen and (min-width: 1000px){
-    grid-template-columns: repeat(5, 1fr);
-
-    & > :nth-last-child(-n + 1) {
-      grid-column: span 5;
-    }
-  }
-
-  @media screen and (max-width: 600px){
-    grid-template-columns: repeat(1, 1fr);
-
-    & > :nth-last-child(-n + 1) {
-      grid-column: span 1;
-    }
-  }
-  
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -141,7 +157,31 @@ const SectionContianer = styled.section`
 `;
 
 const Boardx = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
-  padding: 32px;
-  height: 128px;
+  padding: 8px;
+  width: 167px;
+  height: 240px;
+`;
+
+const ImgContainer = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  width: 100%;
+  display: flex;
+  padding: 2px;
+  padding-bottom: 3px;
+  aspect-ratio: 1 / 1;
+`;
+
+const ImgBox = styled.img`
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+`;
+
+const Info = styled.div`
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
 `;

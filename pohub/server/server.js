@@ -6,6 +6,7 @@ const MySQLStore = require('express-mysql-session')(session);
 const app = express();
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
 const bodyParser = require('body-parser');
 const requestIp = require('request-ip');
 const {db, sessionDB} = require('./db.js');
@@ -154,10 +155,56 @@ app.get('/countBoard', function(req, res){
     //console.log('count Board');
 });
 
+//게시판 썸네일
+app.get('/thumnail/:boardID', async (req, res) => {
+    const boardID = req.params.boardID;
+    const query = 'SELECT file_name FROM file WHERE board_id = ? LIMIT 1;';
+    
+    try {
+        const results = await new Promise((resolve, reject) => {
+          db.query(query, [boardID], (err, results) => {
+            if (err) {
+              console.error('Error executing MySQL query:', err);
+              reject(err);
+            } else {
+              resolve(results);
+            }
+          });
+        });
+    
+        if (results.length === 0) {
+          res.status(404).json({ error: 'File not found' });
+          return;
+        }
+
+        const fileName = results[0].file_name;
+
+        // 파일 경로
+        const filePath = path.join(__dirname, '../../../PoHub_Share/img', fileName);
+    
+        // 파일 읽기
+        const fileData = fs.readFileSync(filePath);
+    
+        // 이미지 크기 조절
+        const resizedImageBuffer = await sharp(fileData)
+            .resize({ width: 200, height: 200, fit: 'cover' }) // 원하는 크기로 조절
+            .toBuffer();
+    
+        // Content-Type 설정 (파일 확장자에 따라 가변적으로 설정)
+        res.writeHead(200, { 'Content-Type': `image/jpeg` });
+    
+        // 조절된 이미지를 클라이언트에 전송
+        res.end(resizedImageBuffer, 'binary');
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 //게시판 불러오기
 app.get('/getBoard', function(req, res){
     const {boardID} = req.query;
-    const query = 'SELECT * FROM board WHERE board_id = ?';
+    const query = 'SELECT * FROM board WHERE board_id = ?;';
     
     db.query(query, [boardID], (err, results) => {
         if(err) {
