@@ -83,7 +83,14 @@ function WriteBoard(props) {
         </ButtonBox>
         <ButtonBox>
           <div style={{width: '64px', display: 'flex'}}>
-            <Button onClick={handleWriteButton}$fontColor='black' $padding='5px' $color='#FFE4E1' $hovercolor='#FFC0CB'>
+            <Button 
+              disabled={loading}
+              onClick={handleWriteButton}
+              $fontColor='black' 
+              $padding='5px' 
+              $color='#FFE4E1' 
+              $hovercolor='#FFC0CB'
+            >
               작성
             </Button>
           </div>

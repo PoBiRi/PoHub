@@ -59,7 +59,7 @@ function Board(props) {
           ) : null
         ))}
         {boardData.map((data) => (
-          <div style={{fontSize: '12px', whiteSpace: 'pre-wrap'}} key={data.board_id + 'cnt'}>
+          <div style={{paddingLeft:'4px', fontSize: '12px', whiteSpace: 'pre-wrap'}} key={data.board_id + 'cnt'}>
             {data.cnt}
           </div>
         ))}
