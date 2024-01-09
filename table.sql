@@ -42,6 +42,10 @@ CREATE TABLE sessions (
   PRIMARY KEY (session_id)
 );
 
+ALTER TABLE board AUTO_INCREMENT = 9;
+delete from board where board_id = 10;
+delete from file where board_id = 10;
+
 insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
