@@ -12,7 +12,7 @@ const requestIp = require('request-ip');
 const {db, sessionDB} = require('./db.js');
 require('dotenv').config();
 const PORT = process.env.SERVER_PORT;
-const PageLimit = 15;
+const PageLimit = 50;
 
 //app.set('trust proxy', 1);
 

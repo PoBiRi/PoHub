@@ -77,8 +77,8 @@ function Section(props) {
             </Info>
           </Boardx>
         ))}
-        <Paging max={max} pageNum={pageNum} />
       </SectionContianer>
+      <Paging max={max} pageNum={pageNum} />
     </div>
   )
 }
@@ -129,17 +129,18 @@ const TextBox = styled.div`
     margin-left: 4px;
   }
 `;
+/*
+& > :nth-last-child(-n + 1) {
+  width: 100%;
+}*/
 
 const SectionContianer = styled.section`
-  height: calc(100vh - 176px);
+  height: calc(100vh - 216px);
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
+	align-content: flex-start;
   gap: 16px;
-
-  & > :nth-last-child(-n + 1) {
-    width: 100%;
-  }
 
   &::-webkit-scrollbar {
     width: 4px;
