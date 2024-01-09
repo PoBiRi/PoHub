@@ -200,7 +200,6 @@ app.post('/writeBoard', upload.array('files', 5), (req, res) => {
         .replace('D:\\PBR_Work\\PoHub_Share\\', '')
         .replace('\\', '');
     }
-    console.log(req.files);
 
     //1차 쿼리 게시판 db에 입력
     db.query(query, [req.session.userId, boardType, cnt, title], (err, results) => {

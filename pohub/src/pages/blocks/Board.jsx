@@ -45,7 +45,7 @@ function Board(props) {
         <div style={{display: 'flex'}}>
           {fileData.map((data) => (
             data.file_type === 'others' ? (
-              <FileContainer key={'others' + data.board_id} onClick={() => downloadFile(data.file_name)}>
+              <FileContainer key={'others' + data.file_id} onClick={() => downloadFile(data.file_name)}>
                 {data.file_name}
               </FileContainer>
             ) : null

@@ -1,11 +1,10 @@
 import styled, { keyframes } from 'styled-components';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Logo from 'testLogo.png';
 
 function Sidebar(props) {
   const {sidebarToggle} = props;
   const navigate = useNavigate();
-  const location = useLocation();
   
   const isSidebarToggle = (sidebarToggle) => {
     if (sidebarToggle === true) {
@@ -26,13 +25,13 @@ function Sidebar(props) {
       <ThreadContainer>
         <Thredx onClick={() => navigate("/Pages/freeBoard/1")}>
           <IconContiner className={isSidebarToggle(sidebarToggle)}>
-            <ToggleIcon isToggle={location.pathname.includes('freeBoard')}/>
+            <ToggleIcon />
           </IconContiner>
           <TextBox fontSize='16px' marginleft='12px' className={isSidebarToggle(sidebarToggle)}>자유게시판</TextBox>
         </Thredx>
         <Thredx onClick={() => navigate("/Pages/fileShare/1")}>
           <IconContiner className={isSidebarToggle(sidebarToggle)}>
-            <ToggleIcon isToggle={location.pathname.includes('fileShare')}/>
+            <ToggleIcon />
           </IconContiner>
           <TextBox fontSize='16px' marginleft='12px' className={isSidebarToggle(sidebarToggle)}>자료저장소</TextBox>
         </Thredx>
@@ -59,7 +58,7 @@ const ToggleIcon = (props) => {
       strokeLinejoin="round" 
       className="feather feather-toggle-right">
         <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
-        <circle cx={props.isToggle ? '16' : '8'} cy="12" r="3"></circle>
+        <circle cx='16' cy="12" r="3"></circle>
       </svg>
   )
 }
