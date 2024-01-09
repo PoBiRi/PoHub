@@ -40,7 +40,7 @@ function Section(props) {
         {boardData.map((data) => (
           <Boardx key={data.board_id} style={{overflow: 'hidden'}} onClick={() =>{
               checkIsLoggedIn(); 
-              navigate(`/Pages/${data.board_type}/board/${data.board_id}`)
+              navigate(`/Pages/board/${data.board_id}`)
           }}>
             {data.title}<br/>{data.writter}
           </Boardx>

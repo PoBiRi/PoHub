@@ -5,7 +5,7 @@ import { getData } from 'controller/ReqData';
 
 function Board(props) {
   const Types = {'freeBoard': '자유게시판', 'fileShare': '자료저장소'};
-  const { boardType, boardID } = useParams();
+  const { boardID } = useParams();
   const [ boardData, setBoardData ] = useState([]);
   const [ fileData, setFileData ] = useState([]);
   const navigate = useNavigate();
@@ -24,13 +24,15 @@ function Board(props) {
   return (
     <div>
       <InfoBox border='1px solid grey'>
-        <div onClick={() => navigate(`/Pages/${boardType}/1`)}>
-          {Types[boardType]}
-        </div>
+        {boardData.map((data) => (
+          <div key={data.board_type} onClick={() => navigate(`/Pages/${data.board_type}/1`)}>
+              {Types[data.board_type]}
+          </div>
+        ))}
       </InfoBox>
       <BoardContainer>
         {boardData.map((data) => (
-          <InfoBox key={boardType + data.board_id} border='1px solid rgba(0, 0, 0, 0.1)'>
+          <InfoBox key={data.board_type + data.board_id} border='1px solid rgba(0, 0, 0, 0.1)'>
             <BoardInfo>
               제목 : {data.title}
               <div style={{fontSize : "12px", display : "flex"}}>

@@ -30,7 +30,7 @@ create table file (
 	file_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     board_id int,
     file_dir varchar(100),
-    file_type enum('img', 'file', 'video'),
+    file_type enum('img', 'others', 'video'),
     foreign key (board_id) references board(board_id)
 );
 
