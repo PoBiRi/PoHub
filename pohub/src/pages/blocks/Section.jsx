@@ -135,13 +135,12 @@ const TextBox = styled.div`
 }*/
 
 const SectionContianer = styled.section`
-  height: calc(100vh - 248px);
+  height: calc(100vh - 232px);
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
 	align-content: flex-start;
   gap: 16px;
-  padding-bottom: 32px;
 
   &::-webkit-scrollbar {
     width: 4px;

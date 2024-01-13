@@ -24,6 +24,7 @@ export default function Paging(props) {
 }
 
 const Buttonx = styled.div`
+  padding-top: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
