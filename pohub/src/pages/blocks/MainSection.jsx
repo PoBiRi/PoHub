@@ -3,7 +3,13 @@ function MainSection(props) {
     <div>
       메인페이지입니다.<br/><br/>
 
-      1/14 업데이트<br/>
+      1/16 업데이트<br/>
+      <div style={{paddingLeft: '12px', fontSize: '24px'}}>
+        - 회원가입 구현<br/>
+        - 버그 있을 수 있음
+      </div><br/>
+
+      1/14<br/>
       <div style={{paddingLeft: '12px', fontSize: '24px'}}>
         - 회원가입 구현 중
       </div><br/>

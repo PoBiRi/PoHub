@@ -34,6 +34,7 @@ create table file (
     file_type enum('img', 'others', 'video'),
     foreign key (board_id) references board(board_id)
 );
+ALTER TABLE file MODIFY COLUMN file_name varchar(255);
 
 CREATE TABLE sessions (
   session_id VARCHAR(255) NOT NULL,
@@ -49,7 +50,7 @@ delete from file where board_id > 8;
 insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
-update user set user_role = 'user' where id = 1;
+update user set pw = 'whwnsgml1' where id = 2;
 
 ALTER TABLE user AUTO_INCREMENT = 3;
 
