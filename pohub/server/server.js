@@ -7,6 +7,7 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
+const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const requestIp = require('request-ip');
 const {db, sessionDB} = require('./db.js');
@@ -118,6 +119,99 @@ app.post('/reqLogin', function(req, res){
                 console.log('Logged In Denied IP:', clientIp);
                 res.json(false);
             }
+        }
+    });
+});
+
+//아이디 중복확인
+app.post('/checkID', function(req, res){
+    const { id } = req.body;
+    const query = 'SELECT user_id FROM user WHERE user_id =?';
+
+    db.query(query, [id], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            if (results.length > 0){
+                res.json(false);
+            } else {
+                res.json(true);
+            }
+        }
+    });
+});
+
+//메일인증용 코드보내기
+app.post('/sendVerifyCode', (req, res) => {
+    const { email } = req.body;
+    const query = 'SELECT email FROM user WHERE email =?';
+
+    db.query(query, [email], async (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            if (results.length > 0){
+                req.session.verifyCode = undefined;
+                res.json(false);
+            } else {
+                // 랜덤한 인증 코드 생성
+                const verificationCode = Math.floor(100000 + Math.random() * 900000);
+            
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.NODE_MAILER_MAIL,
+                        pass: process.env.NODE_MAILER_PW,
+                    },
+                });
+            
+                const mailOptions = {
+                    from: process.env.NODE_MAILER_MAIL,
+                    to: email,
+                    subject: '이메일 인증',
+                    text: `인증 코드: ${verificationCode}`,
+                };
+            
+                try {
+                    // 이메일 전송
+                    await transporter.sendMail(mailOptions);
+                    req.session.verifyCode = verificationCode;
+                
+                    // 클라이언트에게 성공 응답
+                    res.json(true);
+                } catch (error) {
+                    console.error(error);
+                    res.status(500).json({ success: false, error: '이메일 전송 실패' });
+                }
+            }
+        }
+    });
+});
+
+// VerifyCode 확인
+app.post('/checkVerifyCode', function(req, res){
+    const { verifyCode } = req.body;
+    
+    if(verifyCode == req.session.verifyCode){
+        res.json(true);
+    } else {
+        res.json(false);
+    }
+});
+
+app.post('/singUpNew', function(req, res){
+    const {id, email, pw} = req.body;
+    const Role = 'user';
+    const query = 'INSERT into user(user_id, pw, created_at, user_role, email) VALUES(?,?,current_timestamp(),?,?);';
+
+    db.query(query, [id, pw, Role, email], (err, results) => {
+        if (err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json({ success: true });
         }
     });
 });

@@ -49,6 +49,10 @@ delete from file where board_id > 8;
 insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
+update user set user_role = 'user' where id = 1;
+
+ALTER TABLE user AUTO_INCREMENT = 3;
+
 insert into board(writter, board_type, created_at, cnt, title)
 Values('testuser', 'freeBoard', current_timestamp(), '여기는 이제부터 캬루가 지배한다', '테스트 게시물 1');
 insert into board(writter, board_type, created_at, cnt, title)
@@ -68,6 +72,7 @@ select * from board;
 select * from file;
 select * from sessions;
 delete from board where board_id > 2;
+delete from user where id > 2;
 truncate table sessions;
 truncate table board;
 truncate table file;

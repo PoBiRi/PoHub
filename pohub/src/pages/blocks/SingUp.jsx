@@ -1,17 +1,52 @@
 // 회원가입 모듈
 
-import {useRef} from 'react';
+import {useRef, useState, useEffect } from 'react';
 import Button from './Button';
+import Swal from 'sweetalert2';
 import styled from 'styled-components';
+import {postData} from 'controller/ReqData';
 
 function SignUp(props) {
   const {setBoxType, active} = props;
+  const [isIDFlag, setIsIDFlag] = useState();
+  const [isMailFlag, setIsMailFlag] = useState(0);
+  const [isVerifyFlag, setIsVerifyFlag] = useState();
 
   const idRef = useRef();
   const emailRef = useRef();
   const verifyRef = useRef();
   const passwordRef = useRef();
   const passwordCheckRef = useRef();
+
+  useEffect(() => {
+    if(isIDFlag === false){
+      Swal.fire({
+        title: 'Error',
+        text: 'ID is already Exist',
+      }).then(function() {
+        setIsIDFlag();
+      });
+    }
+
+    if(isMailFlag === false){
+      Swal.fire({
+        title: 'Error',
+        text: 'E-mail is already Exist',
+      }).then(function() {
+        setIsMailFlag();
+      });
+    }
+    
+    if(isVerifyFlag === false){
+      Swal.fire({
+        title: 'Error',
+        text: 'Code is not Collect',
+      }).then(function() {
+        setIsVerifyFlag();
+      });
+    }
+  // eslint-disable-next-line
+  },[isMailFlag, isIDFlag, isVerifyFlag]);
 
   const hadleEnterDown = (event) => {
     if( event.key === 'Enter'){
@@ -21,7 +56,73 @@ function SignUp(props) {
   };
 
   const handleSignUpButton = () => {
-    setBoxType(0);
+    if(!passwordRef.current.value || !isIDFlag || !isMailFlag || !isVerifyFlag){
+      Swal.fire({
+        title: 'Error',
+        text: 'Something Wrong',
+      });
+    } else if(passwordRef.current.value !== passwordCheckRef.current.value){
+      Swal.fire({
+        title: 'Error',
+        text: 'Passwords are not Same',
+      });
+    } else {
+      const userData = {
+        id: idRef.current.value,
+        email: emailRef.current.value,
+        pw: passwordRef.current.value,
+      };
+      postData('singUpNew', userData);
+      window.location.reload(true);
+    }
+  };
+
+  const handleConfirmButton = () => {
+    if(!idRef.current.value){
+      Swal.fire({
+        title: 'Error',
+        text: 'There is no ID',
+      });
+    } else {
+      const idData = {
+        id: idRef.current.value,
+      };
+      postData('checkID', idData, setIsIDFlag);
+    };
+  }
+
+  const handleSendButton = () => {
+    if(!emailRef.current.value){
+      Swal.fire({
+        title: 'Error',
+        text: 'There is no Mail Address',
+      });
+    } else if(!emailRef.current.value.includes('@')) {
+      Swal.fire({
+        title: 'Error',
+        text: 'This is not Mail Address',
+      });
+    } else {
+      const mailData = {
+        email: emailRef.current.value,
+      };
+      setIsMailFlag(true);
+      postData('sendVerifyCode', mailData, setIsMailFlag);
+    };
+  };
+
+  const handleVerifyButton = () => {
+    if(!verifyRef.current.value){
+      Swal.fire({
+        title: 'Error',
+        text: 'There is no Code',
+      });
+    } else {
+      const verifyData = {
+        verifyCode: verifyRef.current.value,
+      };
+      postData('checkVerifyCode', verifyData, setIsVerifyFlag);
+    };
   };
 
   return (
@@ -30,24 +131,66 @@ function SignUp(props) {
         ID
       </Lable>
       <InputButtonBox>
-        <Input style={{width:'100%', marginRight:'4px'}} id="signUpID" ref={idRef} placeholder="ID" type="text"/>
-        <Button style={{width:'50%', height:'25px'}} $color='#f59e0b' $padding='5px' $hovercolor='#d97706'>
-          Confirm
+        <Input 
+          style={{width:'100%', marginRight:'4px'}} 
+          id="signUpID" 
+          ref={idRef} 
+          placeholder="ID" 
+          type="text"
+          disabled={isIDFlag}
+        />
+        <Button 
+          style={{width:'50%', height:'25px'}}  
+          $padding='5px' 
+          $color={isIDFlag ? '#45a049' : '#f59e0b'} 
+          $hovercolor={isIDFlag ? '#45a049' : '#d97706'}
+          onClick={handleConfirmButton}
+          disabled={isIDFlag}
+        >
+          {isIDFlag ? <span>Confirm</span> : <span>Confirm</span>}
         </Button>
       </InputButtonBox>
-      <Lable htmlFor='E-mail'>
+      <Lable htmlFor='email'>
         E-mail
       </Lable>
       <InputButtonBox>
-        <Input style={{width:'100%', marginRight:'4px'}} id="email" ref={emailRef} placeholder="E-mail" type="text"/>
-        <Button style={{width:'50%', height:'25px'}} $color='#f59e0b' $padding='5px' $hovercolor='#d97706'>
+        <Input 
+          style={{width:'100%', marginRight:'4px'}} 
+          id="email" 
+          ref={emailRef} 
+          placeholder="E-mail" 
+          type="text"
+          disabled={isMailFlag}
+        />
+        <Button 
+          style={{width:'50%', height:'25px'}} 
+          $color={isMailFlag ? '#45a049' : '#f59e0b'} 
+          $hovercolor={isMailFlag ? '#45a049' : '#d97706'}
+          $padding='5px' 
+          onClick={handleSendButton}
+          disabled={isMailFlag}
+        >
           Send
         </Button>
       </InputButtonBox>
       <InputButtonBox>
-        <Input style={{width:'100%', marginRight:'4px'}} id="verify" ref={verifyRef} placeholder="Verify Code" type="text"/>
-        <Button style={{width:'50%', height:'25px'}} $color='#f59e0b' $padding='5px' $hovercolor='#d97706'>
-          Verify
+        <Input 
+          style={{width:'100%', marginRight:'4px'}} 
+          id="verify" 
+          ref={verifyRef} 
+          placeholder="Verify Code" 
+          type="text"
+          disabled={isVerifyFlag}
+        />
+        <Button 
+          style={{width:'50%', height:'25px'}}
+          disabled={isVerifyFlag}
+          $color={isVerifyFlag ? '#45a049' : '#f59e0b'} 
+          $padding='5px' 
+          $hovercolor={isVerifyFlag ? '#45a049' : '#d97706'}
+          onClick={handleVerifyButton}
+        >
+          {isVerifyFlag ? <span>Verified</span> : <span>Verify</span>}
         </Button>
       </InputButtonBox>
       <Lable htmlFor="signUpPassword">
@@ -76,6 +219,7 @@ const InputButtonBox = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const Lable = styled.label`
   font-size: 16px;
   font-weight: 500;
