@@ -10,6 +10,7 @@ const sharp = require('sharp');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const requestIp = require('request-ip');
+const compression = require('compression');
 const {db, sessionDB} = require('./db.js');
 require('dotenv').config();
 const PORT = process.env.SERVER_PORT;
@@ -20,6 +21,18 @@ const PageLimit = 50;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(compression());
+
+// Static 파일 제공 설정 (웹 빌드 파일과 압축된 파일 제공)
+app.use('/Blue', express.static(path.join(__dirname, '../ProjectBlue'), {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.gz')) {
+            res.setHeader('Content-Encoding', 'gzip');
+            res.setHeader('Content-Type', 'application/javascript');
+        }
+    }
+}));
+
 app.use(cors({
     origin: true,
     //origin: ['http://www.pobijunior.com', 'http://localhost:3000'],
@@ -27,6 +40,7 @@ app.use(cors({
 }));
 app.use(requestIp.mw());
 app.use(express.static(path.join(__dirname, '../build')));
+//app.use('/Blue', express.static(path.join(__dirname, '../ProjectBlue')));  // ProjectBlue 디렉토리 파일 제공
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -78,6 +92,11 @@ app.use(
 
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+
+//포폴용 ProjectBlue
+app.get('/Blue', function(req, res){
+    res.sendFile(path.join(__dirname, '../ProjectBlue/index.html'));
 });
 
 //클라이언트 ip 확인
