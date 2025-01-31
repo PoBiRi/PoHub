@@ -3,6 +3,7 @@ ALTER DATABASE pohub CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 drop table file;
 drop table board;
 drop table user;
+drop table sessions;
 
 create table user (
 	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -50,7 +51,10 @@ delete from file where board_id > 8;
 insert into user(user_id, pw, created_at, user_role)
 Values('testuser', 'kkkddd', current_timestamp(), 'admin');
 
-update user set pw = 'whwnsgml1' where id = 2;
+insert into user(user_id, pw, created_at, user_role)
+Values('pobijunior', 'whwnsgml1', current_timestamp(), 'admin');
+
+update user set pw = 'hello' where id = 1;
 
 ALTER TABLE user AUTO_INCREMENT = 3;
 
@@ -67,13 +71,20 @@ insert into file(board_id,  file_dir, file_type)
 Values(1, 'http://www.pobijunior.com/img/manukyaru.png', 'img');
 insert into file(board_id,  file_dir, file_type)
 Values(1, 'http://www.pobijunior.com/img/1583773181.jpg', 'img');
+insert into file(board_id,  file_dir, file_type, file_name)
+Values(20, 'http://www.pobijunior.com/img/1705671059335_20240115_204301.jpg', 'img', '1705671059335_20240115_204301.jpg');
+
+update file set file_name='1583773181.jpg' where file_id=61;
+
+update user set pw='pigjog589' where id=7;
 
 select * from user;
 select * from board;
 select * from file;
 select * from sessions;
 delete from board where board_id > 2;
-delete from user where id > 2;
-truncate table sessions;
-truncate table board;
-truncate table file;
+delete from user where id = 3;
+
+show binary logs;
+show global variables like '%log_bin%';
+flush logs;

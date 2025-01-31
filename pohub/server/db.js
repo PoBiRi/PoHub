@@ -19,6 +19,23 @@ const sessionDB = mysql.createConnection({
     port: process.env.DB_PORT
 });
 
+// MySQL 재연결 함수
+function handleDisconnect(connection) {
+    connection.on('error', function(err) {
+        console.error('MySQL error:', err);
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            console.log('Attempting to reconnect to MySQL...');
+            handleDisconnect(connection);
+        } else {
+            console.log(err.code);
+            throw err;
+        }
+    });
+}
+
+handleDisconnect(db);
+handleDisconnect(sessionDB);
+/*
 db.connect((error, result) => {
     if (error) console.log(error);
 });
@@ -26,5 +43,5 @@ db.connect((error, result) => {
 sessionDB.connect((error, result) => {
     if (error) console.log(error);
 });
-
+*/
 module.exports = {db, sessionDB};

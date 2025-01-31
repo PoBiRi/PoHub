@@ -48,9 +48,9 @@ const storage = multer.diskStorage({
     },
 });
 
-//파일들 총용량 최대 크기 500MB
+//파일들 총용량 최대 크기 1GB
 const upload = multer({
-    limits: { fileSize: 500 * 1024 * 1024 },
+    limits: { fileSize: 2048 * 1024 * 1024 },
     storage: storage 
 });
 
@@ -201,6 +201,7 @@ app.post('/checkVerifyCode', function(req, res){
     }
 });
 
+// 회원가입
 app.post('/singUpNew', function(req, res){
     const {id, email, pw} = req.body;
     const Role = 'user';
@@ -252,11 +253,11 @@ app.get('/countBoard', function(req, res){
 //게시판 썸네일
 app.get('/thumnail/:boardID', async (req, res) => {
     const boardID = req.params.boardID;
-    const query = 'SELECT file_name FROM file WHERE board_id = ? LIMIT 1;';
+    const query = 'SELECT file_name FROM file WHERE board_id = ? AND file_type = ? LIMIT 1;';
     
     try {
         const results = await new Promise((resolve, reject) => {
-          db.query(query, [boardID], (err, results) => {
+          db.query(query, [boardID, 'img'], (err, results) => {
             if (err) {
               console.error('Error executing MySQL query:', err);
               reject(err);
