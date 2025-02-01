@@ -6,10 +6,27 @@
     <title>Unity WebGL Player | Blue</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <style>
+      body { padding: 0; margin: 0; }
+      #unity-container { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+      #unity-canvas { 
+        background: #231F20; 
+        width: 100%; 
+        height: auto; 
+        max-width: 960px; /* 최대 너비 960px로 설정 */
+        max-height: 540px; /* 최대 높이 540px로 설정 */
+      }
+      .unity-mobile #unity-canvas { 
+        width: 100vw; 
+        height: calc(100vw * 9 / 16); /* 모바일에서 화면 비율을 16:9로 맞추기 위해 높이를 계산 */
+        max-height: 100vh; 
+        max-width: 177.78vh; 
+      }
+    </style>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width=960 height=540 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
