@@ -1,9 +1,9 @@
 use pohub;
 ALTER DATABASE pohub CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-drop table file;
+/*drop table file;
 drop table board;
 drop table user;
-drop table sessions;
+drop table sessions;*/
 
 create table user (
 	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -35,7 +35,7 @@ create table file (
     file_type enum('img', 'others', 'video'),
     foreign key (board_id) references board(board_id)
 );
-ALTER TABLE file MODIFY COLUMN file_name varchar(255);
+ALTER TABLE file ADD COLUMN file_name varchar(255);
 
 CREATE TABLE sessions (
   session_id VARCHAR(255) NOT NULL,
@@ -59,14 +59,14 @@ update user set pw = 'hello' where id = 1;
 ALTER TABLE user AUTO_INCREMENT = 3;
 
 insert into board(writter, board_type, created_at, cnt, title)
-Values('testuser', 'freeBoard', current_timestamp(), '여기는 이제부터 캬루가 지배한다', '테스트 게시물 1');
+Values('testuser', 'freeBoard', current_timestamp(), '여기는 이제부터 캬루가 지배한다', '복원');
 insert into board(writter, board_type, created_at, cnt, title)
-Values('testuser', 'freeBoard', current_timestamp(), '카링입니다', '테스트 게시물 2');
+Values('testuser', 'freeBoard', current_timestamp(), '카링입니다', '복원');
+
+update board set created_at=current_timestamp() where board_id=14;
 
 insert into file(board_id,  file_dir, file_type)
 Values(2, 'http://www.pobijunior.com/img/test.png', 'img');
-insert into file(board_id,  file_dir, file_type)
-Values(2, 'http://www.pobijunior.com/img/logo192.png', 'img');
 insert into file(board_id,  file_dir, file_type)
 Values(1, 'http://www.pobijunior.com/img/manukyaru.png', 'img');
 insert into file(board_id,  file_dir, file_type)
@@ -74,9 +74,18 @@ Values(1, 'http://www.pobijunior.com/img/1583773181.jpg', 'img');
 insert into file(board_id,  file_dir, file_type, file_name)
 Values(20, 'http://www.pobijunior.com/img/1705671059335_20240115_204301.jpg', 'img', '1705671059335_20240115_204301.jpg');
 
-update file set file_name='1583773181.jpg' where file_id=61;
+update file set file_name='manukyaru.png' where file_id=1;
 
 update user set pw='pigjog589' where id=7;
+update user set email='pobijunior@naver.com' where id=1;
+
+insert into board(writter, board_type, created_at, cnt, title)
+Values('testuser', 'fileShare', current_timestamp(), '복원', '복원');
+
+insert into file(board_id,  file_dir, file_type, file_name)
+Values(64, 'http://www.pobijunior.com/others/1733122504247_[4K60FPS] 2.mp4', 'others', '1733122504247_[4K60FPS] 2.mp4');
+
+update file set board_id=19 where file_id=37;
 
 select * from user;
 select * from board;

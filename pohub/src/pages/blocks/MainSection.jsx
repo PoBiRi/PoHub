@@ -3,6 +3,11 @@ function MainSection(props) {
     <div>
       메인페이지입니다.<br/><br/>
 
+      2/8 업데이트<br/>
+      <div style={{paddingLeft: '12px', fontSize: '24px'}}>
+        - 파일 저장명 한글 깨짐 문제 해결
+      </div><br/>
+
       1/16 업데이트<br/>
       <div style={{paddingLeft: '12px', fontSize: '24px'}}>
         - 회원가입 구현<br/>
