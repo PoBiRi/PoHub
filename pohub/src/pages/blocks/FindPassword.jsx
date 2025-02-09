@@ -9,11 +9,10 @@ import {postData} from 'controller/ReqData';
 function FindPassword(props) {
   const {setBoxType, active} = props;
   const [isIDFlag, setIsIDFlag] = useState();
-  const [isMailFlag, setIsMailFlag] = useState(0);
+  const [isSendButton, setIsSendButton] = useState(false);
   const [isVerifyFlag, setIsVerifyFlag] = useState();
 
   const idRef = useRef();
-  const emailRef = useRef();
   const verifyRef = useRef();
   const passwordRef = useRef();
   const passwordCheckRef = useRef();
@@ -22,18 +21,9 @@ function FindPassword(props) {
     if(isIDFlag === false){
       Swal.fire({
         title: 'Error',
-        text: 'ID is already Exist',
+        text: 'There is no ID',
       }).then(function() {
         setIsIDFlag();
-      });
-    }
-
-    if(isMailFlag === false){
-      Swal.fire({
-        title: 'Error',
-        text: 'E-mail is already Exist',
-      }).then(function() {
-        setIsMailFlag();
       });
     }
     
@@ -46,17 +36,17 @@ function FindPassword(props) {
       });
     }
   // eslint-disable-next-line
-  },[isMailFlag, isIDFlag, isVerifyFlag]);
+  },[isIDFlag, isVerifyFlag]);
 
   const hadleEnterDown = (event) => {
     if( event.key === 'Enter'){
       event.preventDefault();
-      handleSignUpButton();
+      handleChangePasswordButton();
     }
   };
 
-  const handleSignUpButton = () => {
-    if(!passwordRef.current.value || !isIDFlag || !isMailFlag || !isVerifyFlag){
+  const handleChangePasswordButton = () => {
+    if(!passwordRef.current.value || !isIDFlag || !isVerifyFlag){
       Swal.fire({
         title: 'Error',
         text: 'Something Wrong',
@@ -69,10 +59,9 @@ function FindPassword(props) {
     } else {
       const userData = {
         id: idRef.current.value,
-        email: emailRef.current.value,
         pw: passwordRef.current.value,
       };
-      postData('singUpNew', userData);
+      postData('changePassword', userData);
       window.location.reload(true);
     }
   };
@@ -87,29 +76,13 @@ function FindPassword(props) {
       const idData = {
         id: idRef.current.value,
       };
-      postData('checkID', idData, setIsIDFlag);
+      postData('checkID4Password', idData, setIsIDFlag);
+      setIsSendButton(true);
+      setTimeout(() => {
+        setIsSendButton(false);
+      }, 3000);
     };
   }
-
-  const handleSendButton = () => {
-    if(!emailRef.current.value){
-      Swal.fire({
-        title: 'Error',
-        text: 'There is no Mail Address',
-      });
-    } else if(!emailRef.current.value.includes('@')) {
-      Swal.fire({
-        title: 'Error',
-        text: 'This is not Mail Address',
-      });
-    } else {
-      const mailData = {
-        email: emailRef.current.value,
-      };
-      setIsMailFlag(true);
-      postData('sendVerifyCode', mailData, setIsMailFlag);
-    };
-  };
 
   const handleVerifyButton = () => {
     if(!verifyRef.current.value){
@@ -127,63 +100,39 @@ function FindPassword(props) {
 
   const handleBackButton = () => {
     idRef.current.value = "";
-    emailRef.current.value = "";
     verifyRef.current.value = "";
     passwordRef.current.value = "";
     passwordCheckRef.current.value = "";
     
     setBoxType(0);
     setIsIDFlag();
-    setIsMailFlag();
+    setIsSendButton(false);
     setIsVerifyFlag();
   }
 
   return (
     <SignUpForm onKeyDown={hadleEnterDown} className={active ? '' : 'inactive'}>
-      <Lable htmlFor='signUpID'>
+      <Lable htmlFor='checkID'>
         ID
       </Lable>
       <InputButtonBox>
         <Input 
           style={{width:'100%', marginRight:'4px'}} 
-          id="signUpID" 
+          id="checkID" 
           ref={idRef} 
           placeholder="ID" 
           type="text"
-          disabled={isIDFlag}
+          disabled={isSendButton}
         />
         <Button 
           style={{width:'50%', height:'25px'}}  
           $padding='5px' 
-          $color={isIDFlag ? '#45a049' : '#f59e0b'} 
-          $hovercolor={isIDFlag ? '#45a049' : '#d97706'}
+          $color={isSendButton ? '#45a049' : '#f59e0b'} 
+          $hovercolor={isSendButton ? '#45a049' : '#d97706'}
           onClick={handleConfirmButton}
-          disabled={isIDFlag}
+          disabled={isSendButton}
         >
           {isIDFlag ? <span>Confirm</span> : <span>Confirm</span>}
-        </Button>
-      </InputButtonBox>
-      <Lable htmlFor='email'>
-        E-mail
-      </Lable>
-      <InputButtonBox>
-        <Input 
-          style={{width:'100%', marginRight:'4px'}} 
-          id="email" 
-          ref={emailRef} 
-          placeholder="E-mail" 
-          type="text"
-          disabled={isMailFlag}
-        />
-        <Button 
-          style={{width:'50%', height:'25px'}} 
-          $color={isMailFlag ? '#45a049' : '#f59e0b'} 
-          $hovercolor={isMailFlag ? '#45a049' : '#d97706'}
-          $padding='5px' 
-          onClick={handleSendButton}
-          disabled={isMailFlag}
-        >
-          Send
         </Button>
       </InputButtonBox>
       <InputButtonBox>
@@ -193,30 +142,30 @@ function FindPassword(props) {
           ref={verifyRef} 
           placeholder="Verify Code" 
           type="text"
-          disabled={isVerifyFlag}
+          disabled={isVerifyFlag || isIDFlag !== true}
         />
         <Button 
           style={{width:'50%', height:'25px'}}
-          disabled={isVerifyFlag}
+          disabled={isVerifyFlag || isIDFlag !== true}
           $color={isVerifyFlag ? '#45a049' : '#f59e0b'} 
           $padding='5px' 
-          $hovercolor={isVerifyFlag ? '#45a049' : '#d97706'}
+          $hovercolor={isVerifyFlag ? '#45a049' : isIDFlag !== true ? '#f59e0b' :'#d97706'}
           onClick={handleVerifyButton}
         >
           {isVerifyFlag ? <span>Verified</span> : <span>Verify</span>}
         </Button>
       </InputButtonBox>
-      <Lable htmlFor="signUpPassword">
-        PASSWORD
+      <Lable htmlFor="newPassword">
+        New PASSWORD
       </Lable>
-      <Input id="signUpPassword" ref={passwordRef} placeholder="Password" type="password"/>
-      <Input id="passwordCheck" ref={passwordCheckRef} placeholder="Check Password" type="password"/>
+      <Input id="newPassword" ref={passwordRef} placeholder="Password" type="password" disabled={!isVerifyFlag}/>
+      <Input id="newPasswordCheck" ref={passwordCheckRef} placeholder="Check Password" type="password" disabled={!isVerifyFlag}/>
       <ButtonBox>
         <Button $color='#f44336'  $padding='5px' $hovercolor='#d32f2f' onClick={handleBackButton}>
           Back
         </Button>
-        <Button style={{marginLeft: '4px'}} $color='#f59e0b' $padding='5px' $hovercolor='#d97706' onClick={handleSignUpButton}>
-          Sign Up
+        <Button style={{marginLeft: '4px'}} $color='#f59e0b' $padding='5px' $hovercolor='#d97706' onClick={handleChangePasswordButton}>
+          Change Password
         </Button>
       </ButtonBox>
     </SignUpForm>

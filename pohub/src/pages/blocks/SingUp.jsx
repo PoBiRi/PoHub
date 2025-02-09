@@ -10,6 +10,7 @@ function SignUp(props) {
   const {setBoxType, active} = props;
   const [isIDFlag, setIsIDFlag] = useState();
   const [isMailFlag, setIsMailFlag] = useState(0);
+  const [isSendButton, setIsSendButton] = useState(false);
   const [isVerifyFlag, setIsVerifyFlag] = useState();
 
   const idRef = useRef();
@@ -106,8 +107,11 @@ function SignUp(props) {
       const mailData = {
         email: emailRef.current.value,
       };
-      setIsMailFlag(true);
       postData('sendVerifyCode', mailData, setIsMailFlag);
+      setIsSendButton(true);
+      setTimeout(() => {
+        setIsSendButton(false);
+      }, 3000);
     };
   };
 
@@ -134,7 +138,8 @@ function SignUp(props) {
     
     setBoxType(0);
     setIsIDFlag();
-    setIsMailFlag();
+    setIsSendButton(false);
+    setIsMailFlag(0);
     setIsVerifyFlag();
   }
 
@@ -173,15 +178,15 @@ function SignUp(props) {
           ref={emailRef} 
           placeholder="E-mail" 
           type="text"
-          disabled={isMailFlag}
+          disabled={isSendButton || isVerifyFlag}
         />
         <Button 
           style={{width:'50%', height:'25px'}} 
-          $color={isMailFlag ? '#45a049' : '#f59e0b'} 
-          $hovercolor={isMailFlag ? '#45a049' : '#d97706'}
+          $color={isSendButton || isVerifyFlag ? '#45a049' : '#f59e0b'} 
+          $hovercolor={isSendButton || isVerifyFlag ? '#45a049' : '#d97706'}
           $padding='5px' 
           onClick={handleSendButton}
-          disabled={isMailFlag}
+          disabled={isSendButton || isVerifyFlag}
         >
           Send
         </Button>
@@ -193,14 +198,14 @@ function SignUp(props) {
           ref={verifyRef} 
           placeholder="Verify Code" 
           type="text"
-          disabled={isVerifyFlag}
+          disabled={isVerifyFlag || isMailFlag !== true}
         />
         <Button 
           style={{width:'50%', height:'25px'}}
-          disabled={isVerifyFlag}
+          disabled={isVerifyFlag || isMailFlag !== true }
           $color={isVerifyFlag ? '#45a049' : '#f59e0b'} 
           $padding='5px' 
-          $hovercolor={isVerifyFlag ? '#45a049' : '#d97706'}
+          $hovercolor={isVerifyFlag ? '#45a049' : isMailFlag !== true ? '#f59e0b' :'#d97706'}
           onClick={handleVerifyButton}
         >
           {isVerifyFlag ? <span>Verified</span> : <span>Verify</span>}

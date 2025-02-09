@@ -204,7 +204,6 @@ app.post('/sendVerifyCode', (req, res) => {
                     // 이메일 전송
                     await transporter.sendMail(mailOptions);
                     req.session.verifyCode = verificationCode;
-                
                     // 클라이언트에게 성공 응답
                     res.json(true);
                 } catch (error) {
@@ -227,6 +226,52 @@ app.post('/checkVerifyCode', function(req, res){
     }
 });
 
+//아이디 중복확인 후 메일 - 비밀번호 찾기용
+app.post('/checkID4Password', function(req, res){
+    const { id } = req.body;
+    const query = 'SELECT user_id, email FROM user WHERE user_id =?';
+
+    db.query(query, [id], async (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            if (results.length < 1){
+                res.json(false);
+            } else {
+                // 랜덤한 인증 코드 생성
+                const verificationCode = Math.floor(100000 + Math.random() * 900000);
+            
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.NODE_MAILER_MAIL,
+                        pass: process.env.NODE_MAILER_PW,
+                    },
+                });
+            
+                const mailOptions = {
+                    from: process.env.NODE_MAILER_MAIL,
+                    to: results[0].email,
+                    subject: '이메일 인증',
+                    text: `인증 코드: ${verificationCode}`,
+                };
+            
+                try {
+                    // 이메일 전송
+                    await transporter.sendMail(mailOptions);
+                    req.session.verifyCode = verificationCode;
+                    // 클라이언트에게 성공 응답
+                    res.json(true);
+                } catch (error) {
+                    console.error(error);
+                    res.status(500).json({ success: false, error: '이메일 전송 실패' });
+                }
+            }
+        }
+    });
+});
+
 // 회원가입
 app.post('/singUpNew', function(req, res){
     const {id, email, pw} = req.body;
@@ -234,6 +279,21 @@ app.post('/singUpNew', function(req, res){
     const query = 'INSERT into user(user_id, pw, created_at, user_role, email) VALUES(?,?,current_timestamp(),?,?);';
 
     db.query(query, [id, pw, Role, email], (err, results) => {
+        if (err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json({ success: true });
+        }
+    });
+});
+
+// 비밀번호 변경
+app.post('/changePassword', function(req, res){
+    const {id, pw} = req.body;
+    const query = 'UPDATE user set pw = ? where user_id = ?';
+
+    db.query(query, [pw, id], (err, results) => {
         if (err) {
             console.error('Error executing MySQL query:', err);
             res.status(500).json({ error: 'Internal Server Error' });
