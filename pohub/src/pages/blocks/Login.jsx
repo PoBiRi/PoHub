@@ -38,6 +38,10 @@ function Login(props) {
     const handleSignUpButton =() => {
       setBoxType(1);
     };
+
+    const handleFindPasswordButton =() => {
+      setBoxType(2);
+    };
   
     return (
       <LoginForm onKeyDown={hadleEnterDown} className={active ? '' : 'inactive'}>
@@ -56,10 +60,10 @@ function Login(props) {
             </Button>
           </ButtonBox>
           <ButtonBox>
-            <Button $color='#4CAF50' $hovercolor='#45a049' onClick={handleSignUpButton}>
+            <Button style={{marginRight: '4px'}} $color='#4CAF50' $hovercolor='#45a049' onClick={handleSignUpButton}>
               Sign up
             </Button>
-            <Button $color='#f44336' $hovercolor='#d32f2f'>
+            <Button $color='#f44336' $hovercolor='#d32f2f' onClick={handleFindPasswordButton}>
               Forgot password?
             </Button>
           </ButtonBox>

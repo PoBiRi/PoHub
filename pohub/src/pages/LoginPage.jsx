@@ -6,6 +6,7 @@ import Logo from 'testLogo.png';
 import Swal from 'sweetalert2'; /* 알림창 */ 
 import Login from './blocks/Login';
 import SignUp from './blocks/SingUp';
+import FindPassword from './blocks/FindPassword';
 
 function LoginPage(props) {
   const [sideBoxToggle, setSideBoxToggle] = useState();
@@ -39,6 +40,8 @@ function LoginPage(props) {
           active={boxType === 0 ? true : false} />
           <SignUp setBoxType = {setBoxType}
           active={boxType === 1 ? true : false} />
+          <FindPassword setBoxType = {setBoxType}
+          active={boxType === 2 ? true : false} />
         </SideBox>
       </Box>
     </Container>

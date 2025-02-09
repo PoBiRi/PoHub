@@ -3,6 +3,12 @@ function MainSection(props) {
     <div>
       메인페이지입니다.<br/><br/>
 
+      2/9 업데이트<br/>
+      <div style={{paddingLeft: '12px', fontSize: '24px'}}>
+        - SSL인증서 적용 완료
+          https로 접근 가능
+      </div><br/>
+
       2/8 업데이트<br/>
       <div style={{paddingLeft: '12px', fontSize: '24px'}}>
         - 파일 저장명 한글 깨짐 문제 해결

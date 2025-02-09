@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import styled from 'styled-components';
 import {postData} from 'controller/ReqData';
 
-function SignUp(props) {
+function FindPassword(props) {
   const {setBoxType, active} = props;
   const [isIDFlag, setIsIDFlag] = useState();
   const [isMailFlag, setIsMailFlag] = useState(0);
@@ -268,4 +268,4 @@ const Input = styled.input`
   }
 `;
 
-export default SignUp;
+export default FindPassword;

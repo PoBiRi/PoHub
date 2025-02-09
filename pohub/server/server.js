@@ -21,6 +21,12 @@ const PageLimit = 50;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// db timeout 방지
+setInterval(() => {
+    db.query('SELECT 1');
+    sessionDB.query('SELECT 1');
+}, 3600000);
+
 app.use(compression());
 
 // Static 파일 제공 설정 (웹 빌드 파일과 압축된 파일 제공)
