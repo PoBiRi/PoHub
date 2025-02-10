@@ -29,6 +29,24 @@ function Sidebar(props) {
           </IconContiner>
           <TextBox fontSize='16px' marginleft='12px' className={isSidebarToggle(sidebarToggle)}>자유게시판</TextBox>
         </Thredx>
+        <Thredx onClick={() => navigate("/Pages/humor/1")}>
+          <IconContiner className={isSidebarToggle(sidebarToggle)}>
+            <ToggleIcon />
+          </IconContiner>
+          <TextBox fontSize='16px' marginleft='12px' className={isSidebarToggle(sidebarToggle)}>유머게시판</TextBox>
+        </Thredx>
+        <Thredx onClick={() => navigate("/Pages/illust/1")}>
+          <IconContiner className={isSidebarToggle(sidebarToggle)}>
+            <ToggleIcon />
+          </IconContiner>
+          <TextBox fontSize='16px' marginleft='12px' className={isSidebarToggle(sidebarToggle)}>일러스트</TextBox>
+        </Thredx>
+        <Thredx onClick={() => navigate("/Pages/album/1")}>
+          <IconContiner className={isSidebarToggle(sidebarToggle)}>
+            <ToggleIcon />
+          </IconContiner>
+          <TextBox fontSize='16px' marginleft='12px' className={isSidebarToggle(sidebarToggle)}>여행/앨범</TextBox>
+        </Thredx>
         <Thredx onClick={() => navigate("/Pages/fileShare/1")}>
           <IconContiner className={isSidebarToggle(sidebarToggle)}>
             <ToggleIcon />

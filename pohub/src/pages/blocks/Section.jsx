@@ -7,7 +7,7 @@ import Paging from './Paging';
 import NoIMG from 'no_image.png'
 
 function Section(props) {
-  const Types = {'freeBoard': '자유게시판', 'fileShare': '자료저장소'};
+  const Types = {'freeBoard': '자유게시판', 'humor':'유머게시판', 'illust':'일러스트', 'album':'여행/앨범', 'fileShare': '자료저장소'};
   const { checkIsLoggedIn } = props;
   const { boardType, pageNum } = useParams();
   const [ boardData, setBoardData ] = useState([]);

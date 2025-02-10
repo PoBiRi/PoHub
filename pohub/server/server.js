@@ -447,8 +447,64 @@ app.post('/writeBoard', upload.array('files', 5), (req, res) => {
             });
         }
     });
-    
     res.json(true);
+});
+
+// 게시판 삭제
+app.post('/deleteBoard', function(req, res){
+    const {board_id} = req.body;
+    const query = 'SELECT writter FROM board WHERE board_id = ?';
+    const query1 = 'SELECT file_type, file_name FROM file WHERE board_id = ?';
+    const query2 = 'DELETE FROM file WHERE board_id = ?';
+    const query3 = 'DELETE FROM board WHERE board_id = ?';
+
+    db.query(query, [board_id], (err, results) => {
+        if (err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            // 작성자 확인
+            if (results.length === 0 || results[0].writter != req.session.userId) {
+                res.json(false);
+            }
+            else{
+                db.query(query1, [board_id], (err, results2) => {
+                    if(err){
+                        console.error('Failed to delete board:', err);
+                        res.status(500).json({ error: 'Failed to delete board' });
+                    }
+                    else
+                    {
+                        results2.forEach((file) => {
+                            const filePath = path.join(__dirname, '../../../PoHub_Share', file.file_type, file.file_name);
+                            if (fs.existsSync(filePath)) {
+                                fs.unlink(filePath, (unlinkErr) => {
+                                    if (unlinkErr) console.error('Failed to delete file:', unlinkErr);
+                                });
+                            }
+                        });
+                        db.query(query2, [board_id], (err, result1) => {
+                            if(err){
+                                console.error('Failed to delete board:', err);
+                                res.status(500).json({ error: 'Failed to delete board' });
+                            }
+                            else{
+                                db.query(query3, [board_id], (err, result2) => {
+                                    if(err){
+                                        console.error('Failed to delete board:', err);
+                                        res.status(500).json({ error: 'Failed to delete board' });
+                                    }
+                                    else{
+                                        res.json(true);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
 });
 
 //파일 다운로드 (개인용)

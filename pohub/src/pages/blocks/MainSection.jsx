@@ -3,13 +3,19 @@ function MainSection(props) {
     <div>
       메인페이지입니다.<br/><br/>
 
+      2/10 업데이트<br/>
+      <div style={{paddingLeft: '12px', fontSize: '24px'}}>
+        - 게시글 삭제 기능 구현<br/>
+        - 작성자 본인 제외 삭제 불가
+      </div><br/>
+
       2/9 업데이트<br/>
       <div style={{paddingLeft: '12px', fontSize: '24px'}}>
         - SSL인증서 적용 완료
           https로 접근 가능<br/>
         - 서버 db 매일 오전 1시 백업<br/>
         - 비밀번호 찾기 기능 구현<br/>
-        - https로 변경하며 고장난 부분 보수<br/>
+        - https로 변경하며 고장난 부분 보수
       </div><br/>
 
       2/8 업데이트<br/>

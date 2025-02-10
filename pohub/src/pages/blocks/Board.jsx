@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 import { useState, useEffect} from 'react';
+import Swal from 'sweetalert2';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getData, downloadFile } from 'controller/ReqData';
+import { getData, postData, downloadFile } from 'controller/ReqData';
 
 function Board(props) {
-  const Types = {'freeBoard': '자유게시판', 'fileShare': '자료저장소'};
+  const Types = {'freeBoard': '자유게시판', 'humor':'유머게시판', 'illust':'일러스트', 'album':'여행/앨범', 'fileShare': '자료저장소'};
+  const { checkIsLoggedIn } = props;
   const { boardID } = useParams();
   const [ boardData, setBoardData ] = useState([]);
   const [ fileData, setFileData ] = useState([]);
+  const [ isWritter, setIsWritter ] = useState();
+  const [ loading, setLoading ] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,21 +19,56 @@ function Board(props) {
     getData(`getFile?boardID=${boardID}`, setFileData);
   // eslint-disable-next-line
   }, [boardID]);
+
+  useEffect(() => {
+    if(isWritter === false){
+      Swal.fire({
+        title: 'Error',
+        text: '게시글을 지울 권한이 없습니다',
+      }).then(function() {
+        setIsWritter();
+      });
+    }
+    else if(isWritter === true){
+      Swal.fire({
+        title: 'success',
+        text: '게시글을 삭제했습니다',
+      }).then(function() {
+        setIsWritter();
+        navigate(-1);
+      });
+    }
+  }, [isWritter]);
   
   const formatDate = (originalDateString) => {
     const date = new Date(originalDateString);
     return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
   };
+ 
+  const handleDeleteButton = async() =>{
+    checkIsLoggedIn(); 
+    setLoading(true);
+    const writterData = {
+      board_id: boardID
+    };
+    await postData('deleteBoard', writterData, setIsWritter);
+    setLoading(false);
+  }
 
   return (
     <div>
-      <InfoBox border='1px solid grey'>
-        {boardData.map((data) => (
+      {boardData.map((data) => (
+        <InfoBox border='1px solid grey'>
           <div key={data.board_type} onClick={() => navigate(`/Pages/${data.board_type}/1`)}>
               {Types[data.board_type]}
           </div>
-        ))}
-      </InfoBox>
+          <DeleteButton disabled={loading} onClick={() => {
+            handleDeleteButton(data.board_type);
+          }}>
+            <TextBox>글지우기</TextBox>
+          </DeleteButton>
+        </InfoBox>
+      ))}
       <BoardContainer>
         {boardData.map((data) => (
           <InfoBox key={data.board_type + data.board_id} border='1px solid rgba(0, 0, 0, 0.1)'>
@@ -77,7 +116,30 @@ const InfoBox = styled.div`
   min-height: 64px;
   margin-bottom: 16px;
   padding-left: 4px;
+  justify-content: space-between;
 `;
+
+const DeleteButton = styled.div`
+  height: 24px;
+  margin-top: auto;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+`;
+
+const TextBox = styled.div`
+  font-size: 24px;
+  margin-left: 12px;
+
+  @media screen and (max-width: 600px){
+    font-size: 12px;
+    margin-left: 4px;
+  }
+`;
+/*
+& > :nth-last-child(-n + 1) {
+  width: 100%;
+}*/
 
 const BoardContainer = styled.div`
   height: calc(100vh - 176px);

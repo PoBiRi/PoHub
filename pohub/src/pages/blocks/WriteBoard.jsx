@@ -6,7 +6,8 @@ import { postData } from 'controller/ReqData';
 import Button from './Button';
 
 function WriteBoard(props) {
-  const Types = {'freeBoard': '자유게시판', 'fileShare': '자료저장소'};
+  const Types = {'freeBoard': '자유게시판', 'humor':'유머게시판', 'illust':'일러스트', 'album':'여행/앨범', 'fileShare': '자료저장소'};
+  const { checkIsLoggedIn } = props;
   const { boardType } = useParams();
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,6 +32,7 @@ function WriteBoard(props) {
   };
 
   const handleWriteButton = async() => {
+    checkIsLoggedIn(); 
     if(!titleRef.current.value || !textareaRef.current.value){
       Swal.fire({
         title: 'Error',
