@@ -137,7 +137,9 @@ const CanvasBox = styled.div`
   }
 `;
 
-const TitleBox = styled.input`
+const TitleBox = styled.input.attrs({
+  maxLength: 20
+})`
   width: 80%;
   border: none;
   font-size: 24px;
@@ -148,7 +150,9 @@ const TitleBox = styled.input`
   &:focus { outline: none; }
 `;
 
-const CntBox = styled.textarea`
+const CntBox = styled.textarea.attrs({
+  maxLength: 3000
+})`
   min-height: 200px;
   width: 80%;
   border: none;

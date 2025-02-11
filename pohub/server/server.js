@@ -412,6 +412,21 @@ app.get('/getFile', function(req, res){
     });
 });
 
+//게시판 댓글 불러오기
+app.get('/getComment', function(req, res){
+    const {boardID} = req.query;
+    const query = 'SELECT comment_id, writter, created_at, cnt FROM comment WHERE board_id = ?';
+    
+    db.query(query, [boardID], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 //게시판 작성
 app.post('/writeBoard', upload.array('files', 5), (req, res) => {
     const {title, cnt, boardType} = JSON.parse(req.body.json);
@@ -450,13 +465,58 @@ app.post('/writeBoard', upload.array('files', 5), (req, res) => {
     res.json(true);
 });
 
+//댓글 작성
+app.post('/writeComment', (req, res) => {
+    const {board_id, cnt} = req.body;
+    const query = 'INSERT into comment(writter, board_id, created_at, cnt) VALUES(?, ?, current_timestamp(), ?);';
+
+    db.query(query, [req.session.userId, board_id, cnt], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+    res.json(true);
+});
+
+//댓글 삭제
+app.post('/deleteComment', (req, res) => {
+    const {comment_id} = req.body;
+    const query = 'SELECT writter FROM comment WHERE comment_id = ?';
+    const query2 = 'DELETE FROM comment WHERE comment_id = ?;';
+
+    db.query(query, [comment_id], (err, results) => {
+        if(err) {
+            console.error('Error executing MySQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            if (results.length === 0 || results[0].writter != req.session.userId) {
+                res.json(false);
+            }
+            else
+            {
+                db.query(query2, [comment_id], (err, results2) => {
+                    if(err) {
+                        console.error('Error executing MySQL query:', err);
+                        res.status(500).json({ error: 'Internal Server Error' });
+                    }
+                    else{
+                        res.json(true);
+                    }
+                });
+            }
+        }
+    });
+});
+
 // 게시판 삭제
 app.post('/deleteBoard', function(req, res){
     const {board_id} = req.body;
     const query = 'SELECT writter FROM board WHERE board_id = ?';
     const query1 = 'SELECT file_type, file_name FROM file WHERE board_id = ?';
     const query2 = 'DELETE FROM file WHERE board_id = ?';
-    const query3 = 'DELETE FROM board WHERE board_id = ?';
+    const query3 = 'DELETE FROM comment WHERE board_id = ?';
+    const query4 = 'DELETE FROM board WHERE board_id = ?';
 
     db.query(query, [board_id], (err, results) => {
         if (err) {
@@ -491,11 +551,19 @@ app.post('/deleteBoard', function(req, res){
                             else{
                                 db.query(query3, [board_id], (err, result2) => {
                                     if(err){
-                                        console.error('Failed to delete board:', err);
-                                        res.status(500).json({ error: 'Failed to delete board' });
+                                        console.error('Failed to delete comment:', err);
+                                        res.status(500).json({ error: 'Failed to delete comment' });
                                     }
                                     else{
-                                        res.json(true);
+                                        db.query(query4, [board_id], (err, result3) => {
+                                            if(err){
+                                                console.error('Failed to delete board:', err);
+                                                res.status(500).json({ error: 'Failed to delete board' });
+                                            }
+                                            else{
+                                                res.json(true);
+                                            }
+                                        });
                                     }
                                 });
                             }

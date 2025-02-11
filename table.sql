@@ -37,6 +37,19 @@ create table file (
 );
 ALTER TABLE file ADD COLUMN file_name varchar(255);
 
+create table comment
+(
+	comment_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    writter varchar(30),
+    board_id int,
+    created_at timestamp,
+    cnt text,
+    foreign key (board_id) references board(board_id)
+);
+ALTER TABLE comment CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE comment
+MODIFY COLUMN cnt text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 CREATE TABLE sessions (
   session_id VARCHAR(255) NOT NULL,
   expires BIGINT,
