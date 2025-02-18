@@ -293,6 +293,8 @@ app.post('/changePassword', function(req, res){
     const {id, pw} = req.body;
     const query = 'UPDATE user set pw = ? where user_id = ?';
 
+    console.log(id + ' : changed pw');
+
     db.query(query, [pw, id], (err, results) => {
         if (err) {
             console.error('Error executing MySQL query:', err);
@@ -433,6 +435,8 @@ app.post('/writeBoard', upload.array('files', 5), (req, res) => {
     const query = 'INSERT into board(writter, board_type, created_at, cnt, title) VALUES(?, ?, current_timestamp(), ?, ?);';
     const query2 = 'INSERT into file(board_id, file_dir, file_type, file_name) VALUES(?, ?, ?, ?);';
     
+    console.log(req.session.userId + ' : Wrote Board');
+
     const replacePath = (inPath) => {
         return inPath
         .replace('D:\\PBR_Work\\PoHub_Share\\', 'http://www.pobijunior.com/')
@@ -470,6 +474,8 @@ app.post('/writeComment', (req, res) => {
     const {board_id, cnt} = req.body;
     const query = 'INSERT into comment(writter, board_id, created_at, cnt) VALUES(?, ?, current_timestamp(), ?);';
 
+    console.log(req.session.userId + ' : Wrote Comment');
+
     db.query(query, [req.session.userId, board_id, cnt], (err, results) => {
         if(err) {
             console.error('Error executing MySQL query:', err);
@@ -484,6 +490,8 @@ app.post('/deleteComment', (req, res) => {
     const {comment_id} = req.body;
     const query = 'SELECT writter FROM comment WHERE comment_id = ?';
     const query2 = 'DELETE FROM comment WHERE comment_id = ?;';
+
+    console.log(req.session.userId + ' : Delete Comment id : ' + comment_id);
 
     db.query(query, [comment_id], (err, results) => {
         if(err) {
@@ -517,6 +525,8 @@ app.post('/deleteBoard', function(req, res){
     const query2 = 'DELETE FROM file WHERE board_id = ?';
     const query3 = 'DELETE FROM comment WHERE board_id = ?';
     const query4 = 'DELETE FROM board WHERE board_id = ?';
+
+    console.log(req.session.userId + ' : Delete Board Number : ' + board_id);
 
     db.query(query, [board_id], (err, results) => {
         if (err) {
