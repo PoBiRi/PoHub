@@ -39,6 +39,16 @@ app.use('/Blue', express.static(path.join(__dirname, '../ProjectBlue'), {
     }
 }));
 
+// Static 파일 제공 설정 (웹 빌드 파일과 압축된 파일 제공)
+app.use('/Snaring', express.static(path.join(__dirname, '../Snaring'), {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.gz')) {
+            res.setHeader('Content-Encoding', 'gzip');
+            res.setHeader('Content-Type', 'application/javascript');
+        }
+    }
+}));
+
 app.use(cors({
     origin: true,
     //origin: ['http://www.pobijunior.com', 'http://localhost:3000'],
